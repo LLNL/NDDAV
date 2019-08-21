@@ -1,0 +1,41 @@
+<form style="margin:auto" action="/">
+    <!-- <legend>Dimension Reduction</legend> -->
+    <div class="input-group">
+        <span for="dimReduction_method" class="input-group-addon"> method</span>
+        <select id="{{id}}dimReduction_method" class="form-control">
+            <option>PCA</option>
+            <option>Spectral</option>
+            <option>LocallyLinear</option>
+            <option>Isomap</option>
+            <option>MDS</option>
+            <option>tSNE</option>
+
+        </select>
+    </div>
+
+    <!-- <div class="input-group">
+        <span for="dimReduction_dimension" class="input-group-addon"> dimension </span>
+        <select id="{{id}}dimReduction_dimension" class="form-control">
+            <option selected>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+    </div> -->
+
+    <div class="input-group">
+        <span for="dimReduction_neighbors" class="input-group-addon"> neighbor </span>
+        <select id="{{id}}dimReduction_neighbors" class="form-control">
+            <option >7</option>
+            <option >8</option>
+            <option >9</option>
+            <option selected>10</option>
+            <option >11</option>
+            <option >12</option>
+            <option >13</option>
+        </select>
+    </div>
+
+    <div>
+        <button id="{{id}}computeDR" type="button" class="btn btn-primary" style="width:100%;">Update</button>
+    </div>
+</form>

@@ -1,0 +1,18 @@
+<form style="margin:auto" action="/" id='{{id}}'>
+    <!-- <legend>Data Filtering</legend> -->
+    <div class="input-group" style="margin-top:20px;">
+        <span for="Function" class="input-group-addon">Function</span>
+        <input id='{{id}}function' class="form-control" readonly />
+    </div>
+    <div>
+      <input type="checkbox" id="cube_dim" name="cubeDim" value="3">
+      <label for="subscribeNews"> 3D Histogram</label>
+    </div>
+    <fieldset class="form-group">
+      <div>
+        <button type="button" class="btn btn-primary" style="width:100%;" id='{{id}}load_function'>Load Data</button>
+      </div>
+  </fieldset>
+</form>
+
+<input type="file" id="{{id}}file-input" style="display: none;"/>

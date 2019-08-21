@@ -1,0 +1,9 @@
+numpy
+flask
+graphviz
+pyclipper
+flask_socketio
+scipy
+sklearn
+python-socketio<4
+eventlet

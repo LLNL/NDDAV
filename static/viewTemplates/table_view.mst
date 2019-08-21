@@ -1,0 +1,6 @@
+<div id="{{id}}" style="text-align:center" >
+    <table class="table table-striped">
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+</div>
