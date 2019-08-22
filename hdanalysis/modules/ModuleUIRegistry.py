@@ -14,7 +14,6 @@ from hdanalysis.core.HDFunction import *
 from hdanalysis.core.HDSegmentation import *
 from hdanalysis.core.HDEmbedding import *
 '''
-# from hdanalysis.core import *
 
 
 '''
@@ -83,11 +82,8 @@ class ModuleUIRegistry:
         elif msgType == 'subscribeData':
             self.subscribeData(msg['name'], uid)
         elif msgType == 'initialised':
-
             if self.afterInitilizationCallback:
                 print("########## trigger after initilization callback")
-                # t = Timer(1.0, self.afterInitilizationCallback)
-                # t.start()
                 self.afterInitilizationCallback();
 
     def addPurePythonModule(self, module_type):

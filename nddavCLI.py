@@ -50,18 +50,6 @@ def main(arguments):
 
     vis = nddav(layout, port=args.port)
     data = vis.addModule(DataHook)
-
-
-    def delayedLoading():
-        fileType = filename.split(".")[-1]
-        if fileType == "npy":
-            npyData = np.load(args.file).astype("f4")
-            data.setDataFromArray(npyData)
-        elif fileType == "txt" or fileType == "csv":
-            data.loadFile(args.file)
-        elif fileType == "hdff":
-            data.loadHDFile(args.file)
-
     vis.show()
 
 # python simpleNumpyDataExample.py --file=./data/circle_in_5D_cube.npy

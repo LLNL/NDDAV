@@ -107,7 +107,7 @@ def loadCSV(filename):
     # some data cell looks like this, so there are possible bugs in
     # this code '0.687492765\r0.150155902'
     #
-    input = open(filename,'r')
+    input = open(filename,'r+')
 
     names = input.next().split(',')
     names = [n.rstrip().lstrip() for n in names]
@@ -127,40 +127,9 @@ def loadCSV(filename):
 
     #we are here yesterday and just finish this function,
     print (names,types)
-    data = np.loadtxt(input,dtype=zip(names,types),delimiter=',').view(HDData)
+    data = np.loadtxt(input,dtype=list(zip(names,types)),delimiter=',').view(HDData)
     data.name = guessDataName(filename)
 
-    return data
-
-def loadStr(string, filename):
-
-    fileType = filename.split(".")[-1]
-
-    input = StringIO(string)
-    names = input.next()
-    # print names
-    names = re.split(';|,|\s',names.rstrip())
-    names = [n.rstrip().lstrip() for n in names]
-    # print "\n loadStr:", names
-
-    try:
-        # If we can convert the name into a number we assume no names
-        # hvae been given
-        num = float(names[0])
-        names = ['X%d' % i for i in range(0,len(names))]
-        input = StringIO(string)
-
-    except:
-        pass
-
-    print ("\n Variables:", names, "  fileType:", fileType)
-    types = ['f4']*len(names)
-    delimiter = " "
-    if fileType=="csv":
-        delimiter = ","
-    data = np.loadtxt(input,dtype=zip(names,types),delimiter=delimiter).view(HDData)
-    data.name = guessDataName(filename)
-    # print data
     return data
 
 def loadASCII(filename):
@@ -172,10 +141,9 @@ def loadASCII(filename):
     names = ['X%d' % i for i in range(0,dim)]
     types = ['f4']*dim
 
-    #data = extensions.load_ascii(filename)
-    data = hdt.load_ascii(filename)
+    data = np.loadtxt(filename, dtype=np.float32)
 
-    data = data.view(dtype=zip(names,types)).view(HDData)
+    data = data.view(dtype=list(zip(names,types)) ).view(HDData)
     data.name = guessDataName(filename)
 
     return data
@@ -192,38 +160,9 @@ def loadBinaryPts(filename):
 
     data = np.fromfile(input,dtype=np.float32)
     data = data.reshape([n,dim])
-    data = data.view(dtype=zip(names,types)).view(HDData)
+    data = data.view(dtype=list(zip(names,types))).view(HDData)
     data.name = guessDataName(filename)
 
-    return data
-
-def loadDB(filename):
-
-    input = open(filename,'r')
-
-    # First figure out how many header lines we have
-    header_size = 0
-    header = input.readline()
-    while header[0] == '#':
-        header = input.readline()
-        header_size += 1
-
-    input.close()
-
-    input = open(filename,'r')
-    for i in range(0,header_size):
-        header = input.readline()
-
-    names = header.split()[1:]
-    dim = len(names)
-    types = ['f4']*dim
-
-    data = hdt.load_points(input)
-    #data = extensions.load_points(input)
-
-    data = data.view(dtype=zip(names,types)).view(HDData)
-
-    input.close()
     return data
 
 def loadRecarray(filename):
@@ -239,14 +178,13 @@ def loadRecarray(filename):
 
 
 def loadFile(filename):
+    ###### assuming the file is already upload to the server ######
     if splitext(filename)[1] == ".csv":
         data = loadCSV(filename)
     elif splitext(filename)[1] == ".pts":
         data = loadBinaryPts(filename)
     elif splitext(filename)[1] == ".txt":
         data = loadASCII(filename)
-    elif splitext(filename)[1] == ".db":
-        data = loadDB(filename)
     elif splitext(filename)[1] == ".recarray":
         data = loadRecarray(filename)
     else:

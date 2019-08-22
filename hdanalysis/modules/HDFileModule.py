@@ -9,7 +9,7 @@ class HDFileModule(Module):
         # self.makeOutputPort("data", HDData)
         # print("HDDATA = ", self.data.getData())
 
-
+    #### FIXME the current load path is fix on the server ####
     def load(self, filename, isIncludeFunctionIndexInfo=False, cube_dim=2):
         # New is the flag stating whether there is the new hdfile file
         ## convert from unicode to ascii

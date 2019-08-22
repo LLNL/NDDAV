@@ -4,28 +4,28 @@ class filterComponent extends baseComponent {
         console.log("########## filterComponent class ###########");
         this.addModule("DataModule");
         this._setupUI();
+
+        this.fileToUpload = None;
     }
 
-    loadFile(f) {
-        // this.callModule("loadFile", {
-        //     "filename": f
-        // });
-        console.log("filterConstructor=>loadFile\n");
-        var reader = new FileReader();
-        reader.onload = (function(theFile) {
-            return function(e) {
-                this.callModule("loadData", {
-                    "ustring": e.target.result,
-                    "filename": f.name
-                });
+    loadFile() {
+        if (this.fileToUpload) {
+            this.callModule("loadFile", {
+                "filename": "upload/" + this.fileToUpload.name
+            });
 
-                this.callModule("getModuleInfoDict", {});
-            };
-        })(f).bind(this);
-
-        reader.readAsText(f);
+            this.callModule("getModuleInfoDict", {});
+        }
     }
 
+    sendFile(file) {
+        this.fileToUpload = file;
+        var formData = new FormData();
+        var request = new XMLHttpRequest();
+        formData.set('file', file)
+        request.open("POST", '/upload')
+        request.send(formData);
+    }
 
     parseFunctionReturn(msg) {
             console.log(msg)
@@ -98,51 +98,19 @@ class filterComponent extends baseComponent {
             this._function_change();
         }.bind(this));
 
+        // upload file to server
         $(this.div + 'file-input').on('change', function(e) {
-            this.loadFile(e.target.files[0]);
-            // console.log(e.target.files[0]);
+            this.sendFile(e.target.files[0]);
         }.bind(this));
 
-        $(this.div + 'load_function').on('click', function() {
-
+        $(this.div + 'select_file').on('click', function() {
             $(this.div + 'file-input').click();
-
-            // this.loadFile('data/terrain1.txt');
-            // this.loadFile('IF_Model.csv');
-            // this.loadFile('data/iris.csv');
-            // this.loadFile('data/Hwdp.float.csv');
-            // this.loadFile('data/NIF_1D_Ensemble.csv');
-            // this.loadFile('data/Hwdp_thd.csv');
-            // this.loadFile('data/wineSmall.csv');
-            // this.loadFile('hdanalysis/tools/simulationData10k.csv');
-
-            // this.loadFile('hdanalysis/tools/simulationData90kIgnition.csv');
-            //   this.loadFile('hdanalysis/tools/simulationData9k.csv');
-            // this.loadFile('hdanalysis/tools/simulationData9k_exitStatus.csv');
-
-            // this.loadFile('hdanalysis/tools/simulationData90k.csv');
-            // this.loadFile('hdanalysis/tools/simulationData9k_BApressure.csv');
-            // this.loadFile('hdanalysis/tools/simulationData9k_Ehs_final.csv');
-            // "BApressure", #burn averaged hotspot pressure
-            // "BAtion", #bur averaged ion temperature
-            // "BTn", #neutron bangtime
-            // "BTx", #x ray bangtime
-            // #"BWn", #neutron burnwidth 9
-            // "Ehs_final", #final internal energy in the hotspot
-            // # "Ehs_initial", #initial internal energy this is always zero
-            // "KE_initial", #initial kinetic energy
-            // "MAXpressure", #peak pressure
-            // "MAXrhoRhs", #peak hotspot rhoR
-            // "MAXrhoRshell", #peak shell rhoR
-            // "MAXtion", #peak ion temperature
-            // "MINradius", #minimum radius
-            // "MINradius_shock", #minimum shock radius
-            // "RKE_%", #kinetic energy remaining
-            // "Ye", #energy yield
-            // "Yn", #neutron yield
-            // "Yx" #x ray yield
         }.bind(this));
 
+        // load file on the server
+        $(this.div + 'load_file').on('click', function() {
+            this.loadFile();
+        }.bind(this));
     }
 
     //load local file
