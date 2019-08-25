@@ -5,5 +5,5 @@ pyclipper
 flask_socketio
 scipy
 sklearn
-python-socketio<4
+python-socketio
 eventlet
