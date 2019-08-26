@@ -48,8 +48,10 @@ except:
 from .DataModule import *
 # from .HDFileModule import *
 from .DataHook import *
-
-
+try:
+    from .HDFileModule import *
+except:
+    print ("HDFileModule is not loaded")
 
 
 

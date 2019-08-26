@@ -1,7 +1,11 @@
 from __future__ import print_function
 import sys
 sys.path.append('..')
+sys.path.append('.')
 from nddavPackage import *
+
+# for debug
+import faulthandler; faulthandler.enable()
 
 layout = {
     "column": [
@@ -18,5 +22,5 @@ data = vis.addModule(DataHook)
 vis.addModule(NeighborhoodModule)
 vis.addModule(EGModule)
 
-data.loadFile("../data/terrain1.txt")
+data.loadFile("data/terrain1.txt")
 vis.show()

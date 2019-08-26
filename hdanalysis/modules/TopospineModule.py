@@ -40,9 +40,12 @@ class TopospineModule(Module):
             function = self.function.getData()
             rangeNames = function.rangeNames()
             domainNames = function.domainNames()
-            self._topoSpines = TopoSpines(self._extremum_graph, rangeNames, domainNames)
+            print(function, rangeNames, domainNames)
+            if function:
+                self._topoSpines = TopoSpines(self._extremum_graph, rangeNames, domainNames)
         except:
             ###### when load precomputed hdff file ######
+            print("load precomputed hdff file")
             attrs = self._extremum_graph.getAttrs()
             print(attrs)
             self._topoSpines = TopoSpines(self._extremum_graph, [attrs[-1]], attrs[:-1])

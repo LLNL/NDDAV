@@ -6,8 +6,6 @@ class HDFileModule(Module):
         super(HDFileModule, self).__init__(parent)
         self.makeOutputPort("EGgraph", ExtremumGraph)
         self.makeOutputPort("data", HDData)
-        # self.makeOutputPort("data", HDData)
-        # print("HDDATA = ", self.data.getData())
 
     #### FIXME the current load path is fix on the server ####
     def load(self, filename, isIncludeFunctionIndexInfo=False, cube_dim=2):

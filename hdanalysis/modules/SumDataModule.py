@@ -32,7 +32,7 @@ class SumDataModule(Module):
 
         res = int(math.sqrt(bins))
 
-        num = len(attrs)*(len(attrs)-1)/2+len(attrs)
+        num = int(len(attrs)*(len(attrs)-1)/2+len(attrs))
 
         output = np.zeros((num, res * res), dtype=np.int32)
 

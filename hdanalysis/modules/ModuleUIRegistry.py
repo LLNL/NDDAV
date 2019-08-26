@@ -3,18 +3,6 @@ from . import *
 import importlib
 import json
 from threading import Timer
-'''
-from hdanalysis.core.DataContext import DataContext
-from hdanalysis.core.DataProxy import DataProxy
-from hdanalysis.core.SumExtremumGraph import *
-from hdanalysis.core.ExtremumGraph import *
-from hdanalysis.core.Matrix import *
-from hdanalysis.core.HDData import *
-from hdanalysis.core.HDFunction import *
-from hdanalysis.core.HDSegmentation import *
-from hdanalysis.core.HDEmbedding import *
-'''
-
 
 '''
   store the map between server module and the corresponding UI in javascript
