@@ -212,7 +212,7 @@ class TopoSpines:
         self.extremaContourLookup = dict()
         edges = []
 
-        levels = [float(low + i*(high-low)/(contour_count)) for i in xrange(0,contour_count)]
+        levels = [float(low + i*(high-low)/(contour_count)) for i in range(0,contour_count)]
 
         saddleValSet = set()
 

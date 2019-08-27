@@ -160,7 +160,7 @@ class ExtremumGraph(HDDataObject):
             variation = -1
 
         triples = self._eg.activeGraph(count,variation)
-        triples = np.reshape(triples,[triples.shape[0]/3,3])
+        triples = np.reshape(triples,[triples.shape[0]//3,3])
 
         graph = ExtremaConnectivity()
 
