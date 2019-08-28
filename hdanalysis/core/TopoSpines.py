@@ -783,7 +783,8 @@ class TopoSpines:
                     selectionsize = 0
 
                 keys = self.extremaContourLookup[extrema].keys()
-                keys.sort()
+                # keys.sort() //py2
+                keys = sorted(keys)
 
                 # print('extrema = ', extrema, 'keys = ', keys)
                 # print("keys num = ", len(keys))

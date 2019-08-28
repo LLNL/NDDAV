@@ -5,24 +5,24 @@ import os
 import argparse
 
 ############# preprocessing data ############
-# layout = {
-#     "column": [
-#         {"row": ["HDFile", "Summary P.C."]},
-#         ##{"column": ["Topological Spine", "Summary P.C.", "Parallel Coordinate"]} #'Scatter Plot']}
-#         {"row": ["Topological Spine","Summary Scatter"]}  # 'Scatter Plot']} "Summary P.C.", "Parallel Coordinate"
-#
-#     ]
-# }
-
-############### small data test #################
 layout = {
     "column": [
-        {"row": ["Filtering", "Neighborhood","Topological Spine"]},
-        # {"column": ["Topological Spine", "Summary P.C.", "Parallel Coordinate"]}, #'Scatter Plot']}
-        {"row": ["Parallel Coordinate", "Scatter Plot"]}  # 'Scatter Plot']} "Summary P.C.", "Parallel Coordinate"
-        # {"column": ["Filtering", "Neighborhood", "Scatter Plot"]}
+        {"row": ["HDFile", "Summary P.C."]},
+        ##{"column": ["Topological Spine", "Summary P.C.", "Parallel Coordinate"]} #'Scatter Plot']}
+        {"row": ["Topological Spine","Summary Scatter"]}  # 'Scatter Plot']} "Summary P.C.", "Parallel Coordinate"
+
     ]
 }
+
+############### small data test #################
+# layout = {
+#     "column": [
+#         {"row": ["Filtering", "Neighborhood","Topological Spine"]},
+#         # {"column": ["Topological Spine", "Summary P.C.", "Parallel Coordinate"]}, #'Scatter Plot']}
+#         {"row": ["Parallel Coordinate", "Scatter Plot"]}  # 'Scatter Plot']} "Summary P.C.", "Parallel Coordinate"
+#         # {"column": ["Filtering", "Neighborhood", "Scatter Plot"]}
+#     ]
+# }
 
 
 # layout = {

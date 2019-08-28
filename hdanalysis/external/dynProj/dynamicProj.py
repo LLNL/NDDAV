@@ -267,6 +267,7 @@ def gram_schmidt(col1, col2):
 ##################### test ######################
 # data, _ = datasets.samples_generator.make_swiss_roll(n_samples=1000)
 # dim = 3
+'''
 data = datasets.load_iris().data
 dim = 4
 count = 0
@@ -328,4 +329,5 @@ def dynamicProjTest():
     # projDataVis(unit2)
 
 #######################################################################
-# dynamicProjTest()
+dynamicProjTest()
+'''

@@ -1,5 +1,4 @@
 import numpy as np
-# from hdanalysis import extensions
 import hdtopology as hdt
 
 try:
@@ -9,7 +8,6 @@ except ImportError:
 
 import re
 import struct
-
 from .HDWarning import *
 from .HDDataObject import *
 from os.path import split,splitext

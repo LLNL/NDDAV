@@ -1,1 +1,1 @@
-from dynamicProj import *
+from .dynamicProj import *

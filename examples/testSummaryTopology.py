@@ -18,7 +18,8 @@ import faulthandler; faulthandler.enable()
 # }
 
 layout = {
-"column": ["Summary P.C.", "Summary Scatter"]
+# "column": ["Summary P.C.", "Summary Scatter"]
+"column": ["Topological Spine", "Summary P.C.", "Summary Scatter"]
 }
 
 vis = nddav(layout, port=5000)
@@ -26,5 +27,5 @@ data = vis.addModule(HDFileModule)
 # vis.addModule(NeighborhoodModule)
 # vis.addModule(EGModule)
 
-data.load("10M_error_fw_output.hdff")
+data.load("1M80e_fw_output_n600_3D.hdff")
 vis.show()

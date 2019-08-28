@@ -65,8 +65,8 @@ class ExtremumGraph(HDDataObject):
         dims = []
         ranges = []
         for i in cur_brush:
-            ii = i.encode('utf-8')
-            dims.append(ii)
+            # ii = i.encode('utf-8')
+            dims.append(i)
             ranges.append(cur_brush[i])
 
         all_attrs = self.getAttrs()
@@ -90,7 +90,7 @@ class ExtremumGraph(HDDataObject):
                 # print(dims)
                 return self._eg.getHist(attrs, False)
             else:
-                # print(dims)
+                # print(attrs, dims, ranges)
                 return self._eg.getHist(attrs, False, dims, ranges)
 
     def getAttrs(self):
@@ -225,14 +225,13 @@ class ExtremumGraph(HDDataObject):
     def getfuncHist(self, brushedrange, ext):
         dims = []
         for i in brushedrange:
-
-            ii = i.encode('utf-8')
-
-            dims.append(ii)
+            # ii = i.encode('utf-8')
+            dims.append(i)
 
         if ext and ext>=0:
             return self._eg.getHist(ext, 10, dims, True)
         else:
+            # print("dims")
             return self._eg.getHist(dims, True)
 
     def getselectedfunction(self, brushedrange, ext):
@@ -240,9 +239,9 @@ class ExtremumGraph(HDDataObject):
         ranges = []
         for i in brushedrange:
             # print(type(i))
-            ii = i.encode('utf-8')
+            # ii = i.encode('utf-8')
             # print(type(ii))
-            dims.append(ii)
+            dims.append(i)
             ranges.append(brushedrange[i])
 
         ranges = np.array(ranges)
