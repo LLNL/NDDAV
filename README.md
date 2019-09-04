@@ -6,13 +6,8 @@ python3, numpy, scipy, sklearn, flask, python-socketio, eventlet, pyclipper, gra
 
 Topological data analysis library for NDDAV: hdtopology (https://github.com/LLNL/hdtopology.git)
 
-High-dimensional file format library for NDDAV: hdfileformat (https://github.com/LLNL/hdfileformat.git)
-
-
 #### Install:
-1. Install hdfileformat (https://github.com/LLNL/hdfileformat.git).
-
-2. Install hdtopology (https://github.com/LLNL/hdtopology.git).
+1. Install hdtopology (https://github.com/LLNL/hdtopology.git).
 
 3. Install required python packages:
 ```console
