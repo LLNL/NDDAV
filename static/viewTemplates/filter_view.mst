@@ -19,11 +19,9 @@
 
     <fieldset class="form-group">
       <div>
-        <button type="button" class="btn btn-primary" style="width:100%;" id='{{id}}select_file'>Select Data</button>
+        <button type="button" class="btn btn-primary" style="width:100%;" id='{{id}}select_file'>Select Data</button>        
       </div>
-      <div>
-        <button type="button" class="btn btn-primary" style="width:100%;" id='{{id}}load_file'>Load Data</button>
-      </div>
+
       <div>
         <button type="button" class="btn btn-primary" style="width:100%;" id='{{id}}define_function'>Define Function</button>
       </div>

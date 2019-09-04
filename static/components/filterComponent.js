@@ -9,6 +9,7 @@ class filterComponent extends baseComponent {
     }
 
     loadFile() {
+        console.log("load file on server side\n");
         if (this.fileToUpload) {
             this.callModule("loadFile", {
                 "filename": "upload/" + this.fileToUpload.name
@@ -25,6 +26,27 @@ class filterComponent extends baseComponent {
         formData.set('file', file)
         request.open("POST", '/upload')
         request.send(formData);
+        // request.done(()=>{this.loadFile});
+        request.onreadystatechange=function(){
+               if (request.readyState==4 && request.status==200){
+                  console.log('request.readyState=',request.readyState);
+                  console.log('request.status=',request.status);
+                  console.log('response=',request.responseText);
+
+                  this.loadFile();
+                  // var data = JSON.parse(request.responseText);
+                  // var uploadResult = data['message']
+                  // console.log('uploadResult=',uploadResult);
+                  //
+                  // if (uploadResult=='failure'){
+                  //    console.log('failed to upload file');
+                  //    // displayError('failed to upload');
+                  // }else if (uploadResult=='success'){
+                  //    console.log('successfully uploaded file');
+                  //    this.loadFile();
+                  // }
+               }
+            }.bind(this);
     }
 
     parseFunctionReturn(msg) {
@@ -108,9 +130,9 @@ class filterComponent extends baseComponent {
         }.bind(this));
 
         // load file on the server
-        $(this.div + 'load_file').on('click', function() {
-            this.loadFile();
-        }.bind(this));
+        // $(this.div + 'load_file').on('click', function() {
+        //     this.loadFile();
+        // }.bind(this));
     }
 
     //load local file
