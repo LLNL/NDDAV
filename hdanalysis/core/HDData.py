@@ -105,9 +105,9 @@ def loadCSV(filename):
     # some data cell looks like this, so there are possible bugs in
     # this code '0.687492765\r0.150155902'
     #
-    input = open(filename,'r+')
+    input = open(filename,'r')
 
-    names = input.next().split(',')
+    names = input.readline().split(',')
     names = [n.rstrip().lstrip() for n in names]
     try:
         # If we can convert the name into a number we assume no names
