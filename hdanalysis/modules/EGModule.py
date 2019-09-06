@@ -32,7 +32,6 @@ class EGModule(Module):
     def computeExtremumGraph(self,function,neighborhood):
 
         if self._slope.__class__ == AscendingEuclidian().__class__:
-            print("@@@@", neighborhood.edges, self.invalidDomain.get())
             self._extremum_graph.initialize(function, neighborhood,self._slope, self.invalidDomain.get())
         elif self._slope.__class__ == DescendingEuclidian().__class__:
             self._extremum_graph.initialize(function, neighborhood,self._slope, self.invalidDomain.get())

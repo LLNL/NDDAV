@@ -29,7 +29,6 @@ class HDData(np.recarray,HDDataObject):
 
     def __array_finalize__(self,obj):
         #print "===================== HDData Initialization 2 ======================="
-
         if obj is None:
             return
 
