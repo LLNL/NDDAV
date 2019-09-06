@@ -1,7 +1,7 @@
 {
   "column": [{
-    "row": ["Neighborhood", "Parallel Coordinate"]
+    "row": ["Filtering", "Neighborhood", "Topological Spine"]
   }, {
-    "row": ["Topological Spine", "Scatter Plot"]
+    "row": ["Parallel Coordinate", "Scatter Plot"]
   }]
 }

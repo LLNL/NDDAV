@@ -29,25 +29,7 @@ class Neighborhood(np.ndarray,HDDataObject):
             return
         HDDataObject.__init__(self,obj)
 
-    # def __init__(self,edges=None,t=None,d=None,s=None,length=None):
-    #
-    #     if t != None:
-    #         self.type = t
-    #     else:
-    #         self.type ="Undefined"
-    #
-    #     if length != None:
-    #         self.length = np.array(length,dtype=np.float32)
-    #
-    #     self.domain = d
-    #     self.shape = s
-
-    # def resize(self,length):
-    #     self.edges = np.array(length*[[-1,-1]],dtype=np.uint32)
-
 def construct_neighborhood(data, method, max_neighbors=0, beta=1):
-
-    #print "function normalization:", data.normalization
     import ngl
 
     normalizationType = data.normalization

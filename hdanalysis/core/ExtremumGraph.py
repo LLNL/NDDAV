@@ -11,7 +11,6 @@ from .ExtremaConnectivity import *
 
 from hdanalysis.core.HDDataObject import HDDataObject
 
-# class ExtremumGraph(object):
 class ExtremumGraph(HDDataObject):
     """An ExtremumGraph represents all extrema and saddles of a function in an
     hierarchical manner as described in the TopologicalSpines paper. It
