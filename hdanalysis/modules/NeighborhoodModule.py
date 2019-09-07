@@ -46,7 +46,7 @@ class NeighborhoodModule(Module):
     def computeNeighborhood(self,function):
         if (self.neighborhood.valid()
             and self.neighborhood.getData().domain == function.domain().dtype.names
-            and self.neighborhood.getData().shape == function.shape
+            #and self.neighborhood.getData().shape == function.shape
             and self.neighborhood.getData().normalization == function.normalization):
              return
         if self.isCustomized:
@@ -54,11 +54,6 @@ class NeighborhoodModule(Module):
 
         print ("\n============ computeNeighborhood(self,function): ============\n")
         graph = construct_neighborhood(function,str(self._method),self._maxNeighbors,self._beta)
-
-        self.outputGraph = False
-        if self.outputGraph:
-            print ("\n\n========== output graph =============\n\n")
-            graph.save("testGraph.graph")
         return graph
 
 

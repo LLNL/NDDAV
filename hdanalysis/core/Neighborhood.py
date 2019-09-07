@@ -57,5 +57,8 @@ def construct_neighborhood(data, method, max_neighbors=0, beta=1):
     edges = ngl.getSymmetricNeighborGraph(method,data,max_neighbors,beta)
 
     graph = Neighborhood(edges)
+    graph.method = method
     graph.normalization = normalizationType
+    graph.domain = domain
+    
     return graph
