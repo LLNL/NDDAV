@@ -4,7 +4,6 @@ import scipy as sp
 from scipy.linalg import eig,svd,eigh
 from scipy.sparse.linalg import eigs
 from sklearn.neighbors import kneighbors_graph
-import matplotlib.pyplot as plt
 from copy import deepcopy
 
 def matprod(*args):
@@ -46,7 +45,7 @@ def compPRcurve(X,Y,nSize):
     return (np.array(precList),np.array(recList))
 
 def plot_decision_regions(X, y, classifier, resolution=0.02):
-
+    import matplotlib.pyplot as plt
     # setup marker generator and color map
     markers = ('s', 'x', 'o', '^', 'v')
     colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')

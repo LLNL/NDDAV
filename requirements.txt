@@ -7,3 +7,8 @@ scipy
 sklearn
 python-socketio
 eventlet
+
+### for axis-align decompsition ####
+#cvxpy
+#pymanopt
+#nudged

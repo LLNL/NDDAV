@@ -9,6 +9,8 @@ Topological data analysis library for NDDAV: hdtopology (https://github.com/LLNL
 #### Install:
 1. Install hdtopology (https://github.com/LLNL/hdtopology.git).
 
+2. Install graphviz binary package (i.e., brew install graphviz)
+
 3. Install required python packages:
 ```console
 pip install -r requirements.txt

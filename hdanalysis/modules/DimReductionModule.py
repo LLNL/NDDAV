@@ -69,7 +69,7 @@ class DimReductionModule(Module):
         types = ['f4']*self._embeddingDimension
 
         # result = np.zeros(data.shape[0],dtype=zip(names,types)).view(HDData)
-        print zip(names,types), data.shape[0], domain.shape
+        # print zip(names,types), data.shape[0], domain.shape
         # print embedding
         # result = np.zeros(int(data.shape[0]), dtype=zip(names,types)).view(HDEmbedding)
         result = np.zeros(int(data.shape[0]), dtype=zip(names,types))
@@ -80,7 +80,7 @@ class DimReductionModule(Module):
             result['%s_%d' % (self._method,i)] = embedding[:,i]
         result.setMethod(self._method)
 
-        print "Created embedding", result.__class__,result.name
+        print("Created embedding", result.__class__,result.name)
         # print result
         return result
 

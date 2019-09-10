@@ -5,7 +5,7 @@ from scipy.linalg import eig,svd,eigh
 from scipy.sparse.linalg import eigs
 from sklearn.neighbors import kneighbors_graph
 from copy import deepcopy
-from utils import *
+from .utils import *
 from pymanopt.manifolds import Grassmann
 import nudged
 from sklearn.metrics.pairwise import pairwise_distances
@@ -260,7 +260,7 @@ def DNM_TR(A,B,d,dectype):
     elif dectype.lower() == 'full':
         f = full_evd
     else:
-        print 'Invalid option for dectype'
+        print ('Invalid option for dectype')
 
     for i in range(maxiter):
         D, W = f(A,B,ll,d)

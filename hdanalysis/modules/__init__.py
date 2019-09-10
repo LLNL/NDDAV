@@ -17,6 +17,12 @@ from .SumParallelCoordinateModule import *
 from .SumScatterPlotModule import *
 
 
+# from .DynamicProjModule import *
+# from .DimReductionModule import *
+# from .ClusteringModule import *
+# from .OptimalAxisAlignModule import *
+# from .ViewGraphModule import *
+
 try:
     from .DimReductionModule import *
 except:
@@ -52,8 +58,3 @@ try:
     from .HDFileModule import *
 except:
     print ("HDFileModule is not loaded")
-
-
-
-#__all__ = ["DimReductionModule", "EGModule", "NeighborhoodModule", "SegmentationModule",
-#           "FilterModule", "Module", "PlotModule"]

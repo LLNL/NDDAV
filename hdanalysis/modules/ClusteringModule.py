@@ -16,7 +16,7 @@ class ClusteringModule(Module):
     def computeOutput(self,data):
         data = data.asArray()
 
-        print  "method",self._method," num ",self._numClusters
+        print("method",self._method," num ",self._numClusters)
 
         if self._method == "DBSCAN":
             clustering = DBSCAN().fit_predict(data[:,:-1])

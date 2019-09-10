@@ -7,7 +7,7 @@ from sklearn.neighbors import kneighbors_graph
 from copy import deepcopy
 from cvxpy import *
 from scipy.spatial.distance import cdist
-from utils import *
+from .utils import *
 
 def findAP(X,projList,spar,k):
     omegaList = []

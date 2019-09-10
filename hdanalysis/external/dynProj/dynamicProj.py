@@ -1,6 +1,5 @@
 import numpy as np
 from sklearn import datasets
-import matplotlib.pyplot as plt
 from ctypes import *
 from sys import platform
 import math
@@ -14,12 +13,12 @@ def generateDynamicProjPath(projS, projE, mode = 'FIX_STEPNUM'):
     Fz = np.matrix(projE)
 
     #check if basis are orthonormal
-    print "FaDot:", np.dot(np.transpose(Fa[:,0]), Fa[:,1])
-    print "FzDot:", np.dot(np.transpose(Fz[:,0]), Fz[:,1])
+    print ("FaDot:", np.dot(np.transpose(Fa[:,0]), Fa[:,1]))
+    print ("FzDot:", np.dot(np.transpose(Fz[:,0]), Fz[:,1]))
 
     #svd
     U, s, V = np.linalg.svd(Fa.T*Fz)
-    print "shapes:", U.shape, s.shape, V.shape
+    print ("shapes:", U.shape, s.shape, V.shape)
     Va = np.matrix(U)
     Vz = np.matrix(V)
     Ga = Fa*Va
@@ -31,14 +30,14 @@ def generateDynamicProjPath(projS, projE, mode = 'FIX_STEPNUM'):
     # print 'Ga.T*Gz:\n', Ga.T*Gz
     # print 'Ga*Sigma:\n', Ga*np.diag(s)
 
-    print 's:',s
+    # print ('s:',s)
     tau = np.arccos(s)
-    print 'principal angle:', tau
+    print ('principal angle:', tau)
     #euclidean norm of principal angles
     dist_az = np.sqrt(np.sum(np.multiply(tau, tau)))
     # dist_az = np.sqrt(np.sum(np.multiply(tau, tau)))
-    print 'dist_az:', dist_az
-    print 'tau:', tau
+    # print ('dist_az:', dist_az)
+    # print ('tau:', tau)
 
     if(dist_az<0.001):
         return [ Fz ] #the span(Fa) is equal to span(Fz)
@@ -58,7 +57,7 @@ def generateDynamicProjPath(projS, projE, mode = 'FIX_STEPNUM'):
     # print 'rotation', rotation
     # theta = math.acos(rotation[0,0])
     # r2 = math.asin(rotation[0,1])
-    print "==== det(Fa.T*Fz) ====:", np.linalg.det(Fa.T*Fz)
+    print ("==== det(Fa.T*Fz) ====:", np.linalg.det(Fa.T*Fz))
     # print "theta:", theta
     # print "cos(theta)", math.cos(theta)
     # print "sin(theta)", math.sin(theta)
@@ -102,19 +101,19 @@ def projPath_t(tau_t, Ga, Gz, Va, Vz):
 def generateFullDynamicProjPath(Fa, Fz):
     Fa = np.matrix(Fa)
     Fz = np.matrix(Fz)
-    print np.fabs(Fa.T*Fz-np.identity(2))
+    print (np.fabs(Fa.T*Fz-np.identity(2)))
     if np.all(np.fabs(Fa.T*Fz-np.identity(2)) < 0.001):
         return [Fz]
     U = np.hstack([Fa, Fz])
     B = np.matrix(gs(U))
-    print "Fa:\n", Fa
-    print "Fz:\n", Fz
+    print ("Fa:\n", Fa)
+    print ("Fz:\n", Fz)
     # print "B:\n", B
-    print "B:\n", B
+    print ("B:\n", B)
     Wa = B.T*(Fa)
     Wz = B.T*(Fz)
-    print "Wa:\n", Wa
-    print "Wz:\n", Wz
+    print ("Wa:\n", Wa)
+    print ("Wz:\n", Wz)
 
     # givens rotation
     givensList = []
@@ -244,7 +243,7 @@ def pricipalAngle(Fa, Fz):
     Ga = Fa*Va
     Gz = Fz*Vz
     tau = np.arccos(s)
-    print 'principal angle', tau
+    # print ('principal angle', tau)
 
 def normalize(v):
     norm=np.linalg.norm(v)
