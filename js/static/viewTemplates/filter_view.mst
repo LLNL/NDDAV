@@ -1,0 +1,53 @@
+<form style="margin:auto" action="/" id='{{id}}'>
+    <!-- <legend>Data Filtering</legend> -->
+    <div class="input-group" style="margin-top:20px;">
+        <span for="Function" class="input-group-addon">Function</span>
+        <input id='{{id}}function' class="form-control" readonly />
+    </div>
+
+    <div class="input-group" style="margin-top:20px;">
+        <span for="subselection" class="input-group-addon">subselection</span>
+        <input id='{{id}}subselection' value='none' class="form-control" readonly/>
+    </div>
+
+    <fieldset style="margin-top:20px;" id='{{id}}normType'>
+        <!-- <legend>Normalization</legend> -->
+        <input type="radio" name="norm" value="none" style='margin:2%;'> none
+        <input type="radio" name="norm" value="scaled" style='margin:2%;'> Scaled
+        <input type="radio" name="norm" value="stddev" style='margin:2%;' checked> Standardized
+    </fieldset>
+
+    <fieldset class="form-group">
+      <div>
+        <button type="button" class="btn btn-primary" style="width:100%;" id='{{id}}select_file'>Select Data</button>        
+      </div>
+
+      <div>
+        <button type="button" class="btn btn-primary" style="width:100%;" id='{{id}}define_function'>Define Function</button>
+      </div>
+    </fieldset>
+</form>
+
+<div id='{{id}}function_dialog' style="display: none">
+    <div class='dialog'>
+        <legend style='text-align:center;'>Domain</legend>
+        <div style='margin-left:20%;' id='{{id}}function_domain'>
+
+        </div>
+        <section style='margin:20%;'>
+            <button type="button" class="btn btn-primary" style="width:100%;float:left;" id='{{id}}dialog_cancel'>Cancel</button>
+        </section>
+    </div>
+
+    <div class='dialog'>
+        <legend style='text-align:center;'>Range</legend>
+        <div style='margin-left:20%;' id='{{id}}function_range'>
+
+        </div>
+        <section style='margin:20%;'>
+            <button type="button" class="btn btn-primary" style="width:100%;float:right;" id='{{id}}dialog_apply'> OK</button>
+        </section>
+    </div>
+</div>
+
+<input type="file" id="{{id}}file-input" style="display: none;"/>

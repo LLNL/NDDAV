@@ -1,0 +1,157 @@
+h2 {
+    font: 14px Arial, sans-serif;
+    color: grey;
+    padding: 10px;
+    text-align: center;
+}
+
+html, body {
+    height: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+form {
+    margin-top: 20%;
+    width: 70%;
+}
+
+form div {
+    margin-top: 20px;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 80px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+#wrapper {
+    height: 100%;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+#menuContainer {
+    width: 15%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #CCC;
+}
+
+#menuContainer li {
+    cursor: move;
+    border-bottom: 1px solid #BBB;
+    border-top: 1px solid #BBB;
+    cursor: pointer;
+    padding: 10px 10px;
+    color: #000;
+    background: #AAA;
+    font: 12px Arial, sans-serif;
+}
+
+#menuContainer li:hover {
+    background: #BBB;
+    color: #000;
+}
+
+#layoutContainer {
+    width: 85%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 15%;
+}
+
+.axis line, .axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+#filter_control {
+    margin: 5%;
+    width: 30%;
+    float: left;
+}
+
+#function_dialog {
+    position: absolute;
+    width: 30%;
+    max-height: 50%;
+    border-radius: 25px;
+    background: #f3f3f3;
+;
+    border: 2px solid #e7e7e7;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: none;
+    z-index: 100;
+}
+
+.alert_dialog {
+    position: absolute;
+    width: 30%;
+    max-height: 20%;
+    border-radius: 25px;
+    border: 2px solid #e7e7e7;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: none;
+}
+
+.dialog {
+    width: 45%;
+    float: left;
+    margin: 2%;
+}
+
+.dialog input {
+    margin: 2%;
+}
+
+table {
+    width: 60%;
+    text-align: center;
+    /*margin: auto;*/
+    /*margin-top: %;*/
+    /*border: 1px solid black;*/
+}
+
+table th,
+tr {
+    text-align: center;
+}
+
+.scattersvg {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+}
+
+.scattercvs {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

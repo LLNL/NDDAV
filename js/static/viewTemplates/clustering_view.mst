@@ -1,0 +1,18 @@
+<form style="margin:auto" action="/">
+
+    <div class="input-group">
+        <span for="cluster_method" class="input-group-addon">Method</span>
+        <select id="{{id}}cluster_method"  class="form-control">
+        </select>
+    </div>
+
+    <div class="input-group">
+        <span for="cluster_count" class="input-group-addon"> Cluster</span>
+        <select id="{{id}}cluster_count" class="form-control">
+        </select>
+    </div>
+
+    <div>
+         <button id="{{id}}cluster" type="button" class="btn btn-primary" style="width:100%;">Update</button>
+    </div>
+</form>
