@@ -10,6 +10,7 @@ import sys
 import os
 
 import multiprocess as mp
+import os.path as op
 from functools import partial
 import slugid
 import requests
@@ -29,9 +30,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 layoutConfig = None
 
-processes = {}
-
 class nddav:
+
+    processes = {}
+
     def __init__(self, visLayout, port=5000):
         global layoutConfig
         layoutConfig = visLayout
@@ -105,32 +107,23 @@ class nddav:
     def onDisconnect(sid):
         print ('\n\n!!!!!!!!! socketIO disconnected !!!!!!!!\n\n', sid)
 
+    def start_fuse_processes(self):
+        self.fuse_process = FuseProcess(op.join(OS_TEMPDIR, 'nddav_nbextension'))
+        self.fuse_process.setup()
+
     def show(self):
-        eventlet.wsgi.server(eventlet.listen(('localhost', self.port)), fApp)
+        for puid in list(self.processes.keys()):
+            self.processes[puid].terminate()
+            del self.processes[puid]
 
-    def show2(self, debug=False, **kwargs):
-        print(self.port)
-
-        for puid in list(processes.keys()):
-            processes[puid].terminate()
-            del processes[puid]
-
-        # we're going to assign a uuid to each server process so that if
-        # anything goes wrong, the variable referencing the process doesn't get
-        # lost
         uuid = slugid.nice()
 
-        target = partial(
-            app.run,
-            debug=debug,
-            host='localhost',
-            port=self.port,
-            threaded=True,
-            use_reloader=False,
-            **kwargs
-        )
-        processes[uuid] = mp.Process(target=target)
-        processes[uuid].start()
+        target = partial(eventlet.wsgi.server, sock=eventlet.listen(('localhost', self.port)), site=fApp)
+
+        self.processes[uuid] = mp.Process(target=target)
+        self.processes[uuid].start()
+
+        print(self.processes)
 
         self.connected = False
         while not self.connected:
@@ -141,3 +134,4 @@ class nddav:
                     self.connected = True
             except requests.ConnectionError:
                 time.sleep(0.2)
+        #eventlet.wsgi.server(eventlet.listen(('localhost', self.port)), fApp)
