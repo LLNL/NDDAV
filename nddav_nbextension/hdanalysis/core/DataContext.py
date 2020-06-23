@@ -12,7 +12,7 @@ class DataContext(object):
         self._modules = []
 
     def addModule(self, module_type, **kwargs):
-        # print ("DataContext.addSubModule", module_type, kwargs)
+        print ("DataContext.addSubModule", module_type, kwargs)
         self._modules.append(module_type(self,**kwargs))
         #print "\n\nCheckpoint "
 
@@ -43,8 +43,8 @@ class DataContext(object):
         # print "Keys stored", self._store.keys()
         # print proxyType, type(proxyType)
         if proxyType in self._store.keys():
-            #print ("Proxy already exits for :", proxyType)
-            #print (self._store[proxyType])
+            print ("Proxy already exits for :", proxyType)
+            print (self._store[proxyType])
             if self._store[proxyType][-1].valid():
                 proxy = DataProxy(proxyType)
                 self._store[proxyType].append(proxy)

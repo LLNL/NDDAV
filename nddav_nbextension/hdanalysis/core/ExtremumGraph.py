@@ -147,7 +147,7 @@ class ExtremumGraph(HDDataObject):
         return self._eg.coreSize(int(ext),int(count))
 
     def getConnectivity(self,**kwords):
-        #print("kwords:", kwords)
+        print("kwords:", kwords)
         if 'per' in kwords:
             count = self._eg.countForPersistence(kwords['per'])
         elif 'count' in kwords:

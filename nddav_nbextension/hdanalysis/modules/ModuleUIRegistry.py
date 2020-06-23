@@ -43,36 +43,41 @@ class ModuleUIRegistry:
             self.initParams['NeighborhoodModule']={"neigh":args.graph}
 
     def setAfterInitilizationCallback(self, func):
-        #print("########## set after initilization callback")
+        print("########## set after initilization callback")
         self.afterInitilizationCallback = func
 
     def parsingMessage(self, msg):
         #print "This part defines how the messages got sent"
 
-        #print("####### parsingMessage #################### MSG.KEYS", msg.keys())
+        print("####### parsingMessage #################### MSG.KEYS", msg.keys())
         uid = msg['uid']
         msgType = msg['type'] # registerViewUpdate, callModule, addModule
         if msgType == 'callModule':
+            print("Call")
             function = msg['function']
             parameter = msg['parameter']
-            # print("uid: ", uid, "function: ", function, "parameter: ", parameter)
+            print("uid: ", uid, "function: ", function, "parameter: ", parameter)
             self.callModule(uid, function, parameter)
         elif msgType == 'addModule':
+            print("add")
             moduleName = msg['moduleName']
             listOfSignals = msg['listOfSignals']
             self.addModule(uid, moduleName, listOfSignals)
         elif msgType == 'registerSignal':
+            print("register")
             signalName = msg['signal']
             self.registerSignal(uid, signalName)
         elif msgType == 'setSignal':
+            print("set")
             signalName = msg['signal']
             value = msg['value']
             self.setSignal(uid, signalName, value)
         elif msgType == 'subscribeData':
+            print("subscribe")
             self.subscribeData(msg['name'], uid)
         elif msgType == 'initialised':
             if self.afterInitilizationCallback:
-                #print("########## trigger after initilization callback")
+                print("########## trigger after initilization callback")
                 self.afterInitilizationCallback();
 
     def addPurePythonModule(self, module_type):
@@ -85,8 +90,8 @@ class ModuleUIRegistry:
             print ('       module already exist, reconnect')
             return
 
-        # changed from original NDDAV repo
         m1 = importlib.import_module("."+moduleName, "nddav_nbextension.hdanalysis.modules")
+        print(m1)
 
         module = getattr(
                  m1,
@@ -96,7 +101,7 @@ class ModuleUIRegistry:
             self.context.addModule(module)
         else:
             if moduleName in self.initParams.keys():
-                # print ("######## moduleName ", moduleName, self.initParams[moduleName])
+                print ("######## moduleName ", moduleName, self.initParams[moduleName])
                 self.uid2Module[uid] = self.context.addModule(module, **self.initParams[moduleName])
             else:
                 self.uid2Module[uid] = self.context.addModule(module)
@@ -110,9 +115,11 @@ class ModuleUIRegistry:
     ############## direct data communication without modules ###########
     def setData(self, name, data):
         self.data[name] = data
+        print ("setData in M_UI_Reg ", name, type(data))
         #propagate data update
         if name in self.data2ID.keys():
             for id in self.data2ID[name]:
+                print ("setData:", name, id)
                 mappedData = dataMapper.Py2Js(data)
                 if mappedData:
                     msg = dict()
@@ -122,7 +129,7 @@ class ModuleUIRegistry:
                     self.sendToClient(id, msg)
 
     def subscribeData(self, name, uid):
-        # print("subscribeData:", name, uid)
+        print("subscribeData:", name, uid)
         if name in self.data2ID.keys():
             self.data2ID[name].add(uid)
         else:
@@ -135,9 +142,9 @@ class ModuleUIRegistry:
             self.sendDataToClient(name, self.data[name], uid)
 
     def sendDataToClient(self, name, data, uid):
-        #print("data type: ", type(data))
+        print("data type: ", type(data))
         mappedData = dataMapper.Py2Js(data)
-        #print ("send to client:", data, " => ", mappedData)
+        print ("send to client:", data, " => ", mappedData)
         if mappedData:
             msg = dict()
             msg['type'] = "data"
@@ -148,10 +155,10 @@ class ModuleUIRegistry:
     #####################################################################
     # allow data to be send to client side when the module is triggered in the server
     def registerSignal(self, uid, signal):
-        # print ("########## Signal  ##############", signal)
+        print ("########## Signal  ##############", signal)
         # print "############# registerSingal ###############"
         if signal not in self.signal2uid:
-            #print ("########## Register  ##############", signal)
+            print ("########## Register  ##############", signal)
             self.signal2uid[signal] = set()
         self.signal2uid[signal].add(uid)
         sObject = signalObject(uid, signal, self.sio, self.namespace)
@@ -171,10 +178,10 @@ class ModuleUIRegistry:
 
     def getSignal(self, uid, signal):
         if getattr(self.uid2Module[uid], signal):
-            # print ("=============== Get Signal ==================")
+            print ("=============== Get Signal ==================")
             data = None
-            #print(self.uid2Module[uid])
-            #print(signal)
+            print(self.uid2Module[uid])
+            print(signal)
             if isinstance(getattr(self.uid2Module[uid], signal), SharedValueProxy):
                 data = getattr(self.uid2Module[uid], signal).get()
             else:
@@ -182,6 +189,7 @@ class ModuleUIRegistry:
             # print "###### signal type:", type(data)
             ### !!!! if data: will not work for HDData object !!!
             if data is not None:
+                print("data type: ", type(data))
                 mappedData = dataMapper.Py2Js(data)
                 # print "===== mapped data =====", mappedData
                 # if mappedData != []:
@@ -233,6 +241,7 @@ class ModuleUIRegistry:
 
     def sendToClient(self, uid, json):
         # emit(uid, json, namespace = self.namespace, broadcast=True)
+        print("sending to client")
         self.sio.emit(uid, json, namespace = self.namespace)
         # convert returnVal to json
 
@@ -251,8 +260,8 @@ class signalObject:
         msg['signal'] = self.signal
         msg['data'] = dataMapper.Py2Js(data)
 
-        #print ("############ callback data ##############", type(data) )#, msg['data'], self.signal, self.uid
-        #print ("signal = ", self.signal, self.uid, msg['data'])
+        print ("############ callback data ##############", type(data) )#, msg['data'], self.signal, self.uid
+        print ("signal = ", self.signal, self.uid, msg['data'])
         self.sio.emit(self.uid, msg, namespace = self.namespace, broadcast=False)
         # emit(self.uid, msg, namespace = self.namespace)
         # emit(self.uid, msg, namespace = self.namespace, broadcast=True)
@@ -271,7 +280,7 @@ class dataMapper:
             return data
     @staticmethod
     def Py2Js(data):
-        #print("converting py to js")
+        print("converting py to js")
         returnData = dict()
         ############ ExtremumGraph #############
         if isinstance(data, ExtremumGraph):

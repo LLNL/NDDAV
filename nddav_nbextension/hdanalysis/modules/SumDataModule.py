@@ -56,7 +56,7 @@ class SumDataModule(Module):
 
         range0 = eg.getRange(attrs[-1])
 
-        #print("output = ", output.shape)
+        print("output = ", output.shape)
 
         sumobj = output.view(GlobalSummary)
 
@@ -66,7 +66,7 @@ class SumDataModule(Module):
             sumobj.addRange(i, all_r)
             sumobj.addName(i)
 
-        #print("mymap = ", mymap)
+        print("mymap = ", mymap)
         for j in mymap:
             sumobj.addComb(j, mymap[j])
 

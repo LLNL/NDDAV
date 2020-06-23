@@ -92,7 +92,7 @@ class OptimalAxisAlignModule(Module):
             quality = compPR(X,emb,nSize,factor)
             hist = np.histogram(quality,bins=10, range=(0.0,1.0))
             # qualityTrue = np.maximum(qualityTrue,compPR(X,emb,nSize,factor))
-            #print("LP %d" % (i))
+            print("LP %d" % (i))
             # print quality
             # print hist[0], hist[1]
             LPerrorHist.append(hist[0].tolist())
@@ -145,7 +145,7 @@ class OptimalAxisAlignModule(Module):
             # plt.ylabel('var'+str(omega[1]))
             # # plt.savefig('results/' + dSet + '/decomp_multiple_' + embMethod + '/' + 'axis_align_emb'+ str(it) +'.pdf')
             # plt.show()
-            #print ("AAP %d - [%d %d] - Evidence = %f and Quality = %f" % (it, omega[0], omega[1],evidList[ind], np.mean(quality)))
+            print ("AAP %d - [%d %d] - Evidence = %f and Quality = %f" % (it, omega[0], omega[1],evidList[ind], np.mean(quality)))
 
         # betaList =  betaList/np.max(betaList)+0.1
         LP_AP_PRList = LP_AP_PRList/np.max(LP_AP_PRList)

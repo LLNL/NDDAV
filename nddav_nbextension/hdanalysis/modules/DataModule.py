@@ -83,7 +83,7 @@ class DataModule(Module):
 
     ### for the filtering step ###
     def computeOutput(self,data):
-        #print ("FilterModule.computeOutput: ", data.__class__)
+        print ("FilterModule.computeOutput: ", data.__class__)
 
         if self._condition != None:
             indices = np.where(self._condition)[0] # We create a new view into the data
@@ -92,7 +92,7 @@ class DataModule(Module):
             return data
 
     def filter_properties(self,properties):
-        #print ("FilterModule.filter_properties: ", properties.__class__)
+        print ("FilterModule.filter_properties: ", properties.__class__)
 
         if self._condition != None:
             indices = np.where(self._condition)[0] # We create a new view into the data
@@ -130,7 +130,7 @@ class DataModule(Module):
     def loadFile(self, filename):
         # print filename
         data = loadFile(str(filename))
-        #print(data)
+        print(data)
         # data = loadFile("peaks489.csv")
         self.data.setData(data)
         # self.data._setData(data, 0)
@@ -184,7 +184,7 @@ class DataModule(Module):
         if self.properties.valid():
             self.filtered_properties.setData(self.filter_properties(self.properties.getData()))
 
-        #print ("Filtered from %d row to %d rows" % (self.data.getData().shape[0],self.output.getData().shape[0]))
+        print ("Filtered from %d row to %d rows" % (self.data.getData().shape[0],self.output.getData().shape[0]))
 
         return expr
 

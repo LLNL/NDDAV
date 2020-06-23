@@ -37,8 +37,8 @@ class HDData(np.recarray,HDDataObject):
     def function(self,indices,norm="stddev"):
         #print "===================== HDData function ======================="
         from .HDFunction import HDFunction
-        #print (indices)
-        #print (self.dtype.names)
+        print (indices)
+        print (self.dtype.names)
         f = self[indices].copy().view(HDFunction)
         f.name = self.name + "_f"
 
@@ -114,6 +114,8 @@ def loadCSV(filename):
         num = float(names[0])
 
         names = ['X%d' % i for i in range(0,len(names))]
+        print("names csv")
+        print(names)
 
         input.close()
         input = open(filename,'r')
@@ -123,7 +125,7 @@ def loadCSV(filename):
     types = ['f4']*len(names)
 
     #we are here yesterday and just finish this function,
-    #print (names,types)
+    print (names,types)
     data = np.loadtxt(input,dtype=list(zip(names,types)),delimiter=',').view(HDData)
     data.name = guessDataName(filename)
 
@@ -136,6 +138,8 @@ def loadASCII(filename):
     input.close()
 
     names = ['X%d' % i for i in range(0,dim)]
+    print("names ascii")
+    print(names)
     types = ['f4']*dim
 
     data = np.loadtxt(filename, dtype=np.float32)
@@ -153,6 +157,8 @@ def loadBinaryPts(filename):
     dim = int(line[1])
 
     names = ['X%d' % i for i in range(0,dim)]
+    print("names pts")
+    print(names)
     types = ['f4']*dim
 
     data = np.fromfile(input,dtype=np.float32)

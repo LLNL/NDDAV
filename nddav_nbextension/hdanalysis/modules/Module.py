@@ -16,13 +16,19 @@ class Module(object):
         get reference to dataProxy from context
     '''
     def makeInputPort(self,name,proxyType):
+        print("name: ", name, " proxyType: ", proxyType)
         proxy = self._context.registerInput(proxyType)
+        print("proxy: ", proxy)
         setattr(self,name,proxy)
+        print("input Port: ", getattr(self,name))
         self._inputPorts.append(getattr(self,name))
 
     def makeOutputPort(self,name,proxyType):
         proxy = self._context.registerOutput(proxyType)
         setattr(self,name,proxy)
+        print("name: ", name, " proxyType: ", proxyType)
+        print("proxy: ", proxy)
+        print("input Port: ", getattr(self,name))
         self._outputPorts.append(getattr(self,name))
 
     def makeSharedValue(self,name,instance):
