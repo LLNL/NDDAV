@@ -23,7 +23,7 @@ class DimReductionModule(Module):
         # self.link(self.function, self.embedding, self.computeOutput)
 
     def computeOutput(self,data):
-        print ("DimReductionModule::computeOutput")
+        #print ("DimReductionModule::computeOutput")
         self._embedding = None
 
         #if len(self._attributes) == 0:

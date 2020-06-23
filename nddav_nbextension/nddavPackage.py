@@ -123,8 +123,6 @@ class nddav:
         self.processes[uuid] = mp.Process(target=target)
         self.processes[uuid].start()
 
-        print(self.processes)
-
         self.connected = False
         while not self.connected:
             try:

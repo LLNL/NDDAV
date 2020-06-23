@@ -29,7 +29,7 @@ class TopospineModule(Module):
         # self.brushedrange.changedSignal.connect(self.brushtest)
 
     def initTopoSpine(self, EGgraph):
-        print ("######### TopospineModule::initTopoSpine ########")
+        #print ("######### TopospineModule::initTopoSpine ########")
         self._extremum_graph = EGgraph
 
         #### FIXME remove the need for Function #####
@@ -40,14 +40,14 @@ class TopospineModule(Module):
             function = self.function.getData()
             rangeNames = function.rangeNames()
             domainNames = function.domainNames()
-            print(function, rangeNames, domainNames)
+            #print(function, rangeNames, domainNames)
             if function:
                 self._topoSpines = TopoSpines(self._extremum_graph, rangeNames, domainNames)
         except:
             ###### when load precomputed hdff file ######
-            print("load precomputed hdff file")
+            #print("load precomputed hdff file")
             attrs = self._extremum_graph.getAttrs()
-            print(attrs)
+            #print(attrs)
             self._topoSpines = TopoSpines(self._extremum_graph, [attrs[-1]], attrs[:-1])
 
     # Somewhere here selection was set to -1
@@ -168,7 +168,7 @@ class TopospineModule(Module):
         self.selectExt.set(cur_index)
 
         # print(cur_seg)
-        print("cur_index", cur_index, "new_index", cur_seg[0])
+        #print("cur_index", cur_index, "new_index", cur_seg[0])
         # print("Select!!!!!!!!!!!!!", "new index: ", index, " previous ind: ", cur_index, "seg0", cur_seg)
 
         ### NEED TO CHANGE HERE TO MAKE IT WORK FOR NON HISTOGRAM CASE
