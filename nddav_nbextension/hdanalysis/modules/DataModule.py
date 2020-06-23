@@ -29,6 +29,7 @@ class DataModule(Module):
         if filename:
             print ("\n ================== Load Dataset ====================: ", filename)
             self.loadFile(filename)
+            print("loaded dataset")
 
         if function:
             axes = function.split()
@@ -129,6 +130,7 @@ class DataModule(Module):
     def loadFile(self, filename):
         # print filename
         data = loadFile(str(filename))
+        print(data)
         # data = loadFile("peaks489.csv")
         self.data.setData(data)
         # self.data._setData(data, 0)

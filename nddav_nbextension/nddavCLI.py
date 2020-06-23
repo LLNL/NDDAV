@@ -1,4 +1,4 @@
-from nddavPackage import *
+from .nddavPackage import *
 import sys
 import os
 import argparse

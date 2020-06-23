@@ -13,9 +13,10 @@ class NDDAVDisplay(widgets.DOMWidget):
     _view_module_version = Unicode('^1.1 || ^2 || ^3').tag(sync=True)
     _model_module_version = Unicode('^1.1 || ^2 || ^3').tag(sync=True)
 
-    dom_element_id = Unicode(read_only=True).tag(sync=True)
+    _dom_element_id = Unicode(read_only=True).tag(sync=True)
+    _port_number = Int().tag(sync=True)
 
-def startServer(filename=None):
+def startServer(filename=None, port=5000):
     defaultLayout = {
         "column": [
             {"row": ["Filtering", "Neighborhood", "Topological Spine"]},
@@ -23,20 +24,16 @@ def startServer(filename=None):
         ]
     }
 
-    '''if filename:
+    if filename:
         with open(filename, "r") as read_file:
             layout = json.load(read_file)
     else:
-        layout = defaultLayout'''
-    layout = defaultLayout
+        layout = defaultLayout
 
     print(layout)
-    vis = nddav(layout, 5000)
-    #vis.show2()
+    vis = nddav(layout, port)
     vis.show()
 
-    print("here")
-    #f = vis.getApp()
-
-    #display = NDDAVDisplay()
-    #return f, display
+    display = NDDAVDisplay()
+    display._port_number = port
+    return display

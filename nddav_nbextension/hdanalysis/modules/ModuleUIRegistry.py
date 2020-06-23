@@ -90,8 +90,11 @@ class ModuleUIRegistry:
             print ('       module already exist, reconnect')
             return
 
+        m1 = importlib.import_module("."+moduleName, "nddav_nbextension.hdanalysis.modules")
+        print(m1)
+
         module = getattr(
-                 importlib.import_module("hdanalysis.modules."+moduleName),
+                 m1,
                  moduleName)
         #### do not track signal on this module #####
         if uid == -1:

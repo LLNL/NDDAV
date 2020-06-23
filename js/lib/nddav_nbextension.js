@@ -1,6 +1,5 @@
 var widgets = require('@jupyter-widgets/base');
 var _ = require('lodash');
-//var nddav_helper = require('./nddav_helper.js');
 
 var NDDAVDisplayModel = widgets.DOMWidgetModel.extend({
     defaults: _.extend(widgets.DOMWidgetModel.prototype.defaults(), {
@@ -18,19 +17,15 @@ var NDDAVDisplayModel = widgets.DOMWidgetModel.extend({
 var NDDAVDisplayView = widgets.DOMWidgetView.extend({
     // Defines how the widget gets rendered into the DOM
     render: function() {
-        var randomStr = (
-            Math.random().toString(36).substring(2, 5) +
-            Math.random().toString(36).substring(2, 5)
-        );
-        this.model.set('dom_element_id', randomStr);
+        this.port = this.model.get('_port_number');
 
-        this.container = document.createElement('div');
-        this.container.setAttribute('id', randomStr);
-        this.display = document.createElement('div');
-
-        /*this.nddav = nddav_helper.viewer(this.hgDisplay);
-
-        this.container.api = this.hg;*/
+        this.display = document.createElement('IFrame');
+        console.log(this.port);
+        this.display.setAttribute("src", "http://127.0.0.1:"+this.port);
+        this.display.style.width = "800px";
+        this.display.style.height = "800px";
+        this.el.appendChild(this.display);
+        console.log(this.display);
     }
 });
 
