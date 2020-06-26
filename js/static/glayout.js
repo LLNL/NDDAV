@@ -1,8 +1,8 @@
-console.log("glayout");
 class glayout {
   constructor(container, panelMetaInfo, objectMap) {
     console.log("glayout constructor");
     this.panelMetaInfo = panelMetaInfo;
+    console.log(this.panelMetaInfo)
     this.objectMap = objectMap;
 
     this.container = container;
@@ -159,7 +159,7 @@ class glayout {
             //storge the object with panel
           var component = new objectMap[
             componentState.name](uuid);
-          panel.data("component", component);
+          //panel.data("component", component);
           container.on("resize", component.resize
             .bind(component));
         });
