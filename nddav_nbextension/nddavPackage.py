@@ -34,13 +34,25 @@ class nddav:
 
     processes = {}
 
-    def __init__(self, visLayout, port=5000):
+    def __init__(self, visLayout, port=5000, fileModule=None, data=None):
         global layoutConfig
         layoutConfig = visLayout
         self.port = port
+        global hasModule
+        global moduleType
+        global moduleData
+        hasModule = False
+        moduleType = None
+        moduleData = None
+        if fileModule is not None:
+            hasModule = True
+            if fileModule == "sum" or fileModule == "small":
+                moduleType = fileModule
+            else:
+                raise Exception('Not a valid file module type.')
+            moduleData = data
 
     def addModule(self, moduleName):
-        print(moduleName)
         return registry.addPurePythonModule(moduleName)
 
     def getModule(self, moduleName):
@@ -51,7 +63,9 @@ class nddav:
 
     @app.route('/')
     def index():
-        registry.setData("componentLayout", layoutConfig)
+        '''if moduleType is not None:
+            registry.addPurePythonModule(moduleType)'''
+        registry.setData("componentLayout", layoutConfig, hasModule, moduleType, moduleData)
         return app.send_static_file('appIndex.html')
 
 
@@ -112,6 +126,7 @@ class nddav:
         self.fuse_process.setup()
 
     def show(self):
+        # credit for this code goes to the higlass-python team: https://github.com/higlass/higlass-python
         for puid in list(self.processes.keys()):
             self.processes[puid].terminate()
             del self.processes[puid]
@@ -122,6 +137,7 @@ class nddav:
 
         self.processes[uuid] = mp.Process(target=target)
         self.processes[uuid].start()
+        #print(self.processes[uuid].pid())
 
         self.connected = False
         while not self.connected:
@@ -132,4 +148,6 @@ class nddav:
                     self.connected = True
             except requests.ConnectionError:
                 time.sleep(0.2)
+        print("current process: ", os.getpid())
+        print("parent process: ", os.getppid())
         #eventlet.wsgi.server(eventlet.listen(('localhost', self.port)), fApp)

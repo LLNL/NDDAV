@@ -17,15 +17,15 @@ var NDDAVDisplayModel = widgets.DOMWidgetModel.extend({
 var NDDAVDisplayView = widgets.DOMWidgetView.extend({
     // Defines how the widget gets rendered into the DOM
     render: function() {
+        console.log("started rendering")
         this.port = this.model.get('_port_number');
+        this.num_rows = this.model.get('_num_rows');
 
         this.display = document.createElement('IFrame');
-        console.log(this.port);
         this.display.setAttribute("src", "http://127.0.0.1:"+this.port);
-        this.display.style.width = "800px";
-        this.display.style.height = "800px";
+        this.display.style.width = "900px";
+        this.display.style.height = (this.num_rows * 400).toString() + "px";
         this.el.appendChild(this.display);
-        console.log(this.display);
     }
 });
 
