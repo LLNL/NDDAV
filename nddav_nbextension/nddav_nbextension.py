@@ -18,11 +18,17 @@ class NDDAVDisplay(widgets.DOMWidget):
     _port_number = Int().tag(sync=True)
     _num_rows = Int().tag(sync=True)
 
-def startServer(jsonLayout=None, port=5000, module=None, data=None):
+def createDisplay(jsonLayout=None, port=5000, data=None):
+    '''defaultLayout = {
+        "column": [
+            {"row": ["Neighborhood", "Topological Spine"]},
+            {"row": ["Parallel Coordinate", "Scatter Plot"]}
+        ]
+    }'''
+
     defaultLayout = {
         "column": [
-            {"row": ["Filtering", "Neighborhood", "Topological Spine"]},
-            {"row": ["Parallel Coordinate", "Scatter Plot"]}
+            {"row": ["Topological Spine"]}
         ]
     }
 
@@ -42,8 +48,10 @@ def startServer(jsonLayout=None, port=5000, module=None, data=None):
         port = s.getsockname()[1]
     s.close()
 
+    print(data)
+
     #global vis 
-    vis = nddav(layout, port, module, data)
+    vis = nddav(layout, port, data)
     vis.show()
 
     display = NDDAVDisplay()

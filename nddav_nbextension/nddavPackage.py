@@ -34,22 +34,17 @@ class nddav:
 
     processes = {}
 
-    def __init__(self, visLayout, port=5000, fileModule=None, data=None):
+    def __init__(self, visLayout, port=5000, data=None):
         global layoutConfig
         layoutConfig = visLayout
         self.port = port
         global hasModule
-        global moduleType
         global moduleData
         hasModule = False
-        moduleType = None
         moduleData = None
-        if fileModule is not None:
+        print(data)
+        if data is not None:
             hasModule = True
-            if fileModule == "sum" or fileModule == "small":
-                moduleType = fileModule
-            else:
-                raise Exception('Not a valid file module type.')
             moduleData = data
 
     def addModule(self, moduleName):
@@ -65,7 +60,7 @@ class nddav:
     def index():
         '''if moduleType is not None:
             registry.addPurePythonModule(moduleType)'''
-        registry.setData("componentLayout", layoutConfig, hasModule, moduleType, moduleData)
+        registry.setData("componentLayout", layoutConfig, hasModule, moduleData)
         return app.send_static_file('appIndex.html')
 
 

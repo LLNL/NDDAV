@@ -116,27 +116,27 @@ class ModuleUIRegistry:
             #check all the module
 
         if (self.numModules == len(list(self.uid2Module.values()))) and self.hasModule:
-            if self.moduleType == "sum":
+            ext = splitext(self.moduleData)[1]
+            if ext == ".hdff":
                 m1 = importlib.import_module(".HDFileModule", "nddav_nbextension.hdanalysis.modules")
                 mt = getattr(m1, "HDFileModule")
-            elif self.moduleType == "small":
+            else:
                 m1 = importlib.import_module(".DataModule", "nddav_nbextension.hdanalysis.modules")
                 mt = getattr(m1, "DataModule")
             
             m = self.addPurePythonModule(mt)
 
-            if self.moduleType == "sum":
+            if ext == ".hdff":
                 m.load(filename=self.moduleData, isIncludeFunctionIndexInfo=False, cube_dim=2)
-            elif self.moduleType == "small":
+            else:
                 m.loadFile(filename=self.moduleData)
             
 
     ############## direct data communication without modules ###########
-    def setData(self, name, data, hasModule, moduleType, moduleData):
+    def setData(self, name, data, hasModule, moduleData):
         self.hasModule = False
         if hasModule:
             self.hasModule = hasModule
-            self.moduleType = moduleType
             self.moduleData = moduleData
 
         self.data[name] = data
