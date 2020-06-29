@@ -71,8 +71,8 @@ class d3UIcolorMap {
       this.colorMap.map(d => d.name), this.cmIndex, [this._size[0] +
         1, 0
       ], [
-        20, 20
-      ], "20px");
+        125, 40
+      ], "125px");
     this.cSelector.callback(this.colormap.bind(this));
 
     //draw colorbar

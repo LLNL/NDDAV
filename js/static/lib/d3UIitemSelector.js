@@ -1,6 +1,6 @@
 class d3UIitemSelector {
   constructor(svg, list, initIndex = 0, pos = [15, 15], size = [100, 30],
-    maxWidth = "100px") {
+    maxWidth = "125px") {
     // this.svgTag = "#" + svgTag;
     this.svgContainer = svg;
     this._pos = pos;

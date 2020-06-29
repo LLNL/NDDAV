@@ -38,7 +38,7 @@ class parallelcoordinatesPlot extends basePlot {
                 this.currentAxis = 0;
                 this.vSelector =
                     new d3UIitemSelector(this.svg, this.names, this.currentAxis, [
-                        200,
+                        300,
                         20
                     ])
                 this.colorMap =
