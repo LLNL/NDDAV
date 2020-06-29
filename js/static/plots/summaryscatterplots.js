@@ -2,7 +2,6 @@
 class summaryscatterplots extends basePlot {
   constructor(div, renderMode = "Scalable", plotType = 'single') {
     super(div);
-    console.log(renderMode);
     this.renderMode = renderMode; //'canvas' or 'd3'
     this.plotType = plotType; //'matrix' or 'single'
     this.plots = [];
@@ -24,7 +23,6 @@ class summaryscatterplots extends basePlot {
   setData(data, names, domain = [0, 1], values = [2]) {
     this.data = data;
     this.names = names;
-    console.log("names: ", names);
     this.xIndex = domain[0];
     this.yIndex = domain[1];
     this.vIndex = values[0];
@@ -33,8 +31,6 @@ class summaryscatterplots extends basePlot {
   }
 
   setSum(data, ranges, comb, domain = [0, 1], values = [2]) {
-    console.log("setting sum");
-    console.log(data, ranges, comb);
     this.comb = comb;
     this.raw = data;
     this.ranges = {};
@@ -72,7 +68,6 @@ class summaryscatterplots extends basePlot {
 
   setSeg(segs) {
     this.segs = segs;
-    console.log("Segs ", this.segs);
     this.draw();
   }
 
@@ -133,8 +128,6 @@ class summaryscatterplots extends basePlot {
   }
 
   drawScalable() {
-    console.log("drawing scalable: ", this.scale);
-    console.log("names: ", this.names);
     var marks = this.data;
     // console.log(this.data);
     var indices;
@@ -154,7 +147,6 @@ class summaryscatterplots extends basePlot {
     }
 
     if (this._isValid()) {
-      console.log("isvalid");
       this._updateWidthHeight();
 
       this.plotData = zip([this.data[this.xIndex],
@@ -168,18 +160,16 @@ class summaryscatterplots extends basePlot {
       var offsetX, offsetY;
       
       if (this.names[this.xIndex] in this.scale) {
-        console.log("scale defined");
         this.x = d3.scale.linear().domain(this.scale[this.names[this.xIndex]])
           .range([0, this.width]);
         offsetX = [this.scale[this.names[this.xIndex]], d3.extent(this.plotData,
           d => d[0])];
       } else {
-        console.log("scale undefined");
         this.x = d3.scale.linear().domain(d3.extent(this.plotData, d =>
           d[0])).range([0, this.width]);
  
       }
-      console.log("x: ", this.x);
+      //console.log("x: ", this.x);
       
       if (this.names[this.yIndex] in this.scale) {
         this.y = d3.scale.linear().domain(this.scale[this.names[this.yIndex]])
@@ -191,7 +181,7 @@ class summaryscatterplots extends basePlot {
         this.y = d3.scale.linear().domain(d3.extent(this.plotData, d =>
           d[1])).range([this.height, 0]);
       }
-      console.log("y: ", this.y);
+      //console.log("y: ", this.y);
 
       this.xAxis = d3.svg.axis().scale(this.x).orient('bottom').tickFormat(
         d3.format(".2f"));
@@ -201,7 +191,6 @@ class summaryscatterplots extends basePlot {
       //cleanup
       d3.select(this._div).select("svg").remove();
 
-      console.log(this._div);
       // Create an object for canvas layers
       var canvas2 = d3.select(this._div)
         .append('canvas')

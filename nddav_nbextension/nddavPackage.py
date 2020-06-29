@@ -148,6 +148,4 @@ class nddav:
                     self.connected = True
             except requests.ConnectionError:
                 time.sleep(0.2)
-        print("current process: ", os.getpid())
-        print("parent process: ", os.getppid())
         #eventlet.wsgi.server(eventlet.listen(('localhost', self.port)), fApp)

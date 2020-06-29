@@ -1,6 +1,5 @@
 class basePlot {
     constructor(div) {
-        console.log("Div: ", div);
         this._divTag = div;
         this._div = '#' + div;
 

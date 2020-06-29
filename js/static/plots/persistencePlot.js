@@ -19,7 +19,7 @@ class persistencePlot {
     var currentPersistence = 0.5 * (persistence[1] + persistence[2]);
     // var currentPersistence = 0.2;
     var currentVariation = 0.0;
-    console.log("currentPersistence", currentPersistence);
+    //console.log("currentPersistence", currentPersistence);
 
     //store the full persistence range
     this.fullPersistence = persistence;
@@ -245,7 +245,7 @@ class persistencePlot {
     //update the marker
     var per_y = this.getPersistenceMarkerY(this.currentPersistence);
     var var_y = this.getVariationMarkerY(this.currentVariation);
-    console.log(this.currentPersistence, per_y);
+    //console.log(this.currentPersistence, per_y);
 
     var drag = d3.behavior.drag()
       .on("drag", dragged)

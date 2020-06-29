@@ -17,7 +17,6 @@ var NDDAVDisplayModel = widgets.DOMWidgetModel.extend({
 var NDDAVDisplayView = widgets.DOMWidgetView.extend({
     // Defines how the widget gets rendered into the DOM
     render: function() {
-        console.log("started rendering")
         this.port = this.model.get('_port_number');
         this.num_rows = this.model.get('_num_rows');
 

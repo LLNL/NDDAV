@@ -1,13 +1,10 @@
 class topospineComponent extends baseComponent {
   constructor(uuid) {
     super(uuid);
-    console.log("topospine");
-    console.log(this.uuid);
     this.initTopoPlot();
   }
 
   initTopoPlot() {
-    console.log("topoplot init");
     this.addModule("EGModule", [], false);
     this.addModule("TopospineModule", ['EGgraph', 'subselection', 'selectExt',
       'brushedrange'
@@ -23,11 +20,9 @@ class topospineComponent extends baseComponent {
   }
 
   parseSignalCallback(msg) {
-    console.log("parseSignalCallback");
     // console.log("Spine msg:", msg);
     // console.log("signal: ", msg['signal']);
     if (msg['signal'] === 'EGgraph') {
-      console.log("Signal EG, data attr:", msg['data']);
       var persistence = msg['data']['persistence'];
       var variation = msg['data']['variation'];
       //init/update persistence plot
@@ -80,7 +75,6 @@ class topospineComponent extends baseComponent {
   }
 
   parseFunctionReturn(msg) {
-    console.log("parseFunctionReturn");
     if (msg['function'] === "computeTopoSpineJSON") {
       var spineData = JSON.parse(msg['data']);
       this.topoPlot.setData(spineData);
@@ -113,9 +107,7 @@ class topospineComponent extends baseComponent {
   /////// customized function ///////
 
   updateFunction() {
-    console.log("updateFunction");
     var dimName = this.topoPlot.getCurrentDimName();
-    console.log("updateFunction", dimName);
     this.callModule("updateFunction", {
       "dimensionName": dimName
     })
@@ -123,7 +115,6 @@ class topospineComponent extends baseComponent {
 
   //change the simplification level
   computeTopoSpine(peristence, variation) {
-    console.log("computeTopoSpine");
     var layoutType = this.topoPlot.layoutType();
     var contourScale = this.topoPlot.scale();
     // console.log("contourScale", contourScale);
@@ -137,7 +128,6 @@ class topospineComponent extends baseComponent {
   }
 
   selectExtrema(index) {
-    console.log("selectExtrema:", index);
     // It is called here to update Spine
     this.callModule("subselectSegmentByExtremaIndex", {
       "index": index
@@ -147,7 +137,6 @@ class topospineComponent extends baseComponent {
   }
 
   hoverExtrema(index) {
-    console.log("hoverExtrema");
     this.callModule("subselectExtrema", {
       "index": index
     });

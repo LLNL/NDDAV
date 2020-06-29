@@ -1,13 +1,13 @@
 class hdfileComponent extends baseComponent {
   constructor(uuid) {
     super(uuid);
-    console.log("########## hdfileComponent class ###########");
+    //console.log("########## hdfileComponent class ###########");
     this.addModule("HDFileModule");
     this._setupUI();
   }
 
   loadFile(f) {
-    console.log("hdfileComponent=>loadFile", f.name);
+    //console.log("hdfileComponent=>loadFile", f.name);
     //var selectedDim=document.getElementById("data_cube").value;
 
     var mycheck = document.getElementById("cube_dim").checked;
@@ -18,8 +18,6 @@ class hdfileComponent extends baseComponent {
     else
       selectedDim = 2;
 
-    console.log(selectedDim);
-
     this.callModule("load", {
       "filename": f.name,
       "isIncludeFunctionIndexInfo":false, 
@@ -28,7 +26,6 @@ class hdfileComponent extends baseComponent {
   }
 
   parseFunctionReturn(msg) {
-      console.log(msg)
       switch (msg['function']) {}
     } //end of parseFunctionReturn()
 

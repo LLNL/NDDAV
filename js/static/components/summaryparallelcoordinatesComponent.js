@@ -14,6 +14,7 @@ class summaryparallelcoordinatesComponent extends baseComponent {
   }
 
   parseSignalCallback(msg) {
+    //console.log("PC message: ", msg);
     if (msg['signal'] === 'sumdata') {
       // Set Global Histogram
       var curdata = msg['data']['data'];

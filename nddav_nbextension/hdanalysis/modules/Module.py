@@ -37,7 +37,7 @@ class Module(object):
     #         i.changedSignal.connect(func)
 
     def link(self, *args):
-        # print "!!!!!!!!!!!!!!!!!!!!Module.link: ", args
+        #print("!!!!!!!!!!!!!!!!!!!!Module.link: ", args)
         inputs = args[0:-2]
         output = args[-2]
 
@@ -47,11 +47,11 @@ class Module(object):
 
     def update(self,*args):
 
-        print ("\n Module.update: \n", args[-1], "\n")
+        #print ("\n Module.update: \n", args[-1], "\n")
         inputs = args[0:-2]
         output = args[-2]
         callback = args[-1]
-
+        
         # print ("DI's Debugging","\nInputs: ", inputs, "\nOutputs: ", output, "\nCB: ", callback)
 
         # Test whether all our inputs are up to date

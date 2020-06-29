@@ -3,6 +3,7 @@ from . import *
 import importlib
 import json
 from threading import Timer
+import sys
 
 '''
   store the map between server module and the corresponding UI in javascript
@@ -55,32 +56,38 @@ class ModuleUIRegistry:
         if msgType == 'callModule':
             function = msg['function']
             parameter = msg['parameter']
-            # print("uid: ", uid, "function: ", function, "parameter: ", parameter)
+            #print("uid: ", uid, "function: ", function, "parameter: ", parameter)
             self.callModule(uid, function, parameter)
         elif msgType == 'addModule':
+            #print('addModule')
             moduleName = msg['moduleName']
             listOfSignals = msg['listOfSignals']
             self.addModule(uid, moduleName, listOfSignals)
         elif msgType == 'registerSignal':
+            #print('registerSignal')
             signalName = msg['signal']
             self.registerSignal(uid, signalName)
         elif msgType == 'setSignal':
+            #print('setSignal')
             signalName = msg['signal']
             value = msg['value']
             self.setSignal(uid, signalName, value)
         elif msgType == 'subscribeData':
+            #print('subscribeData')
             self.subscribeData(msg['name'], uid)
         elif msgType == 'initialised':
+            #print('initialised')
             if self.afterInitilizationCallback:
                 #print("########## trigger after initilization callback")
                 self.afterInitilizationCallback();
 
     def addPurePythonModule(self, module_type):
         # the reference is return for python script to access
+        #print(module_type)
         return self.context.addModule(module_type)
 
     def addModule(self, uid, moduleName, listOfSignals):
-        print ('        addModule => ', moduleName, uid, listOfSignals)
+        #print ('        addModule => ', moduleName, uid, listOfSignals)
         if uid in self.uid2Module:
             print ('       module already exist, reconnect')
             return
@@ -91,6 +98,7 @@ class ModuleUIRegistry:
         module = getattr(
                  m1,
                  moduleName)
+        #print(module)
         #### do not track signal on this module #####
         if uid == -1:
             self.context.addModule(module)
@@ -107,9 +115,32 @@ class ModuleUIRegistry:
                 self.registerSignal(uid, signal)
             #check all the module
 
+        if (self.numModules == len(list(self.uid2Module.values()))) and self.hasModule:
+            if self.moduleType == "sum":
+                m1 = importlib.import_module(".HDFileModule", "nddav_nbextension.hdanalysis.modules")
+                mt = getattr(m1, "HDFileModule")
+            elif self.moduleType == "small":
+                m1 = importlib.import_module(".DataModule", "nddav_nbextension.hdanalysis.modules")
+                mt = getattr(m1, "DataModule")
+            
+            m = self.addPurePythonModule(mt)
+
+            if self.moduleType == "sum":
+                m.load(filename=self.moduleData, isIncludeFunctionIndexInfo=False, cube_dim=2)
+            elif self.moduleType == "small":
+                m.loadFile(filename=self.moduleData)
+            
+
     ############## direct data communication without modules ###########
-    def setData(self, name, data):
+    def setData(self, name, data, hasModule, moduleType, moduleData):
+        self.hasModule = False
+        if hasModule:
+            self.hasModule = hasModule
+            self.moduleType = moduleType
+            self.moduleData = moduleData
+
         self.data[name] = data
+        self.numModules = len(data['column'][0]['row'])
         #propagate data update
         if name in self.data2ID.keys():
             for id in self.data2ID[name]:
@@ -122,7 +153,6 @@ class ModuleUIRegistry:
                     self.sendToClient(id, msg)
 
     def subscribeData(self, name, uid):
-        # print("subscribeData:", name, uid)
         if name in self.data2ID.keys():
             self.data2ID[name].add(uid)
         else:
@@ -148,7 +178,7 @@ class ModuleUIRegistry:
     #####################################################################
     # allow data to be send to client side when the module is triggered in the server
     def registerSignal(self, uid, signal):
-        # print ("########## Signal  ##############", signal)
+        #print ("########## Signal  ##############", signal)
         # print "############# registerSingal ###############"
         if signal not in self.signal2uid:
             #print ("########## Register  ##############", signal)
@@ -171,7 +201,7 @@ class ModuleUIRegistry:
 
     def getSignal(self, uid, signal):
         if getattr(self.uid2Module[uid], signal):
-            # print ("=============== Get Signal ==================")
+            #print ("=============== Get Signal ==================")
             data = None
             #print(self.uid2Module[uid])
             #print(signal)
@@ -183,7 +213,7 @@ class ModuleUIRegistry:
             ### !!!! if data: will not work for HDData object !!!
             if data is not None:
                 mappedData = dataMapper.Py2Js(data)
-                # print "===== mapped data =====", mappedData
+                #print("===== mapped data =====", mappedData)
                 # if mappedData != []:
                 msg = dict()
                 msg['type'] = "signalCallback"
@@ -205,7 +235,7 @@ class ModuleUIRegistry:
 
         ########### This function is executed every time when persistence changes / spine updates
 
-        # print "============================== Call:", function
+        #print("============================== Call:", function)
         # print "Call:", function, "with:", paraDict
         returnVal = None
 
@@ -218,7 +248,7 @@ class ModuleUIRegistry:
         else:
                 returnVal = func(**paraDict)
         # except:
-        # print "returnVal:", returnVal
+        #print("returnVal:", returnVal)
         # print self.uid2Module.keys()
         # print "####### Can't call ", function, self.uid2Module[uid], uid, " ########"
 
@@ -233,6 +263,9 @@ class ModuleUIRegistry:
 
     def sendToClient(self, uid, json):
         # emit(uid, json, namespace = self.namespace, broadcast=True)
+        #print(self.signal2uid)
+        #print(self.uid2Module)
+        #print("\nuid: ", uid)
         self.sio.emit(uid, json, namespace = self.namespace)
         # convert returnVal to json
 
@@ -244,7 +277,7 @@ class signalObject:
         self.namespace = namespace
 
     def __call__(self, data):
-        # print "========== signalObject_call ============="
+        #print("========== signalObject_call =============")
 
         msg = dict()
         msg['type'] = "signalCallback"
@@ -271,29 +304,31 @@ class dataMapper:
             return data
     @staticmethod
     def Py2Js(data):
-        #print("converting py to js")
         returnData = dict()
         ############ ExtremumGraph #############
         if isinstance(data, ExtremumGraph):
-            # print ("====================== ExtremumGraph")
+            #print("====================== ExtremumGraph")
             returnData["persistence"] = data.persistences()[0:20].tolist()
             returnData["variation"] = data.variations()[0:20].tolist()
 
         elif isinstance(data, ExtremumGraphCmp):
+            #print("====================== ExtremumGraphCmp")
             returnData["persistence"] = data.persistences().tolist()
             returnData["variation"] = data.variations().tolist()
 
         ############ Matrix #############
         elif isinstance(data, Matrix):
+            #print("====================== Matrix")
             returnData["mat"] = data.getMatrix().tolist()
             if isinstance(data, ProjMatrix):
                 returnData["type"] = data.getProjMatrixType()
         elif isinstance(data, MatrixList):
+            #print("====================== MatrixList")
             returnData["matList"] = [mat.tolist() for mat in data.getMatrixList()]
 
         ############ HDDate #############
         elif isinstance(data, HDData):
-            print ("============ py2js HDData =========== ")
+            #print ("============ py2js HDData =========== ")
             ############ HDSegmentation #############
             if isinstance(data, HDSegmentation):
                 returnData['data'] = [ int(data[i][0]) for i in range(data.shape[0]) ]
@@ -317,6 +352,7 @@ class dataMapper:
 
 
         elif isinstance(data, GlobalSummary):
+            #print("====================== GlobalSummary")
             # print "@@@@@@@@ array signal @@@@@@@@\n", data
             returnData['comb'] = data.getComb()
             returnData['range'] = data.getrange()
@@ -331,6 +367,7 @@ class dataMapper:
 
         ########### all others ############
         else:
+            #print("====================== other")
             returnData["data"] = data
 
         return returnData

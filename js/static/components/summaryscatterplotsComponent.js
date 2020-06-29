@@ -14,7 +14,6 @@ class summaryscatterplotsComponent extends baseComponent {
   }
 
   parseSignalCallback(msg) {
-    console.log("message: ", msg);
     if (msg['signal'] === 'sumdata') {
       var curdata = msg['data']['data'];
       var ranges = msg['data']['range'];
@@ -46,7 +45,7 @@ class summaryscatterplotsComponent extends baseComponent {
     }
     else if (msg['signal'] === 'globalMinMax') {
       var globalMinMax = msg['data']['data'];
-      console.log(typeof globalMinMax);
+      //console.log(typeof globalMinMax);
       this.sPlot.setScale(globalMinMax);
     }
   }

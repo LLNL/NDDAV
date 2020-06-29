@@ -11,7 +11,7 @@ class DataProxy(object):
         self.history = DataHistory(self)
 
     def setData(self, data):
-        # print ("*************** Data Set ********************************\n")
+        #print ("*************** Data Set ********************************\n")
         self._data = data
         # print "data = ", self._data, ".....\n"
 

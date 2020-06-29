@@ -7,7 +7,6 @@ import math
 class SumDataModule(Module):
 
     def __init__(self,bin=None):
-
         super(SumDataModule,self).__init__(bin)
 
         self.makeInputPort("EGgraph", ExtremumGraph)
@@ -24,7 +23,6 @@ class SumDataModule(Module):
         # Global Hist for all data points
 
     def setSum(self, eg):
-
         attrs = eg.getAttrs()
 
         # bins = len(eg.get2Dhist(attrs[0], attrs[1]))

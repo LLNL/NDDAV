@@ -1,6 +1,6 @@
 class summaryparallelcoordinatesPlot extends basePlot {
   constructor(div) {
-    console.log("Sum PC Constructed !!!!!!!!!!!!!!!!!!!!!")
+    //console.log("Sum PC Constructed !!!!!!!!!!!!!!!!!!!!!")
       // this._div = '#' + div;
       // this._divTag = div;
     super(div);
@@ -233,8 +233,8 @@ class summaryparallelcoordinatesPlot extends basePlot {
         return Math.max.apply(Math, row);
       });
       var maxBinVal = Math.max(...maxRow);
-      console.log(maxRow);
-      console.log(maxBinVal);
+      //console.log(maxRow);
+      //console.log(maxBinVal);
 
       this.spc = parallel(0, this.gamma)(this._div + "pcDiv")
         .data(this.plotData)

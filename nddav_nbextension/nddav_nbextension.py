@@ -34,7 +34,6 @@ def startServer(jsonLayout=None, port=5000, module=None, data=None):
     num_rows = len(layout['column'])
     print(layout)
 
-    print(port)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         s.bind(('', port))
@@ -42,7 +41,6 @@ def startServer(jsonLayout=None, port=5000, module=None, data=None):
         s.bind(('',0))
         port = s.getsockname()[1]
     s.close()
-    print(port)
 
     #global vis 
     vis = nddav(layout, port, module, data)

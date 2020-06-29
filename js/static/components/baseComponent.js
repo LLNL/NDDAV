@@ -1,6 +1,5 @@
 //console.log('http://' + document.domain + ':' + location.port +
 // namespace);
-console.log("base component")
 
 class baseComponent {
   constructor(uuid) {
@@ -9,7 +8,7 @@ class baseComponent {
     this.uuid = uuid;
     this.div = "#" + this.uuid;
     socket.on(this.uuid, this.parseMessage.bind(this));
-    console.log("########## based class ###########"+this.uuid);
+    //console.log("########## based class ###########"+this.uuid);
   }
 
   getDiv() {
@@ -22,20 +21,20 @@ class baseComponent {
 
   // this function will be extended by the subclasses
   parseSignalCallback(msg) {
-    console.log("parse signal callback base\n");
+    //console.log("parse signal callback base\n");
   }
 
   // this function will be extended by the subclasses
   parseFunctionReturn(msg) {
-    console.log("parse function return base\n");
+    //console.log("parse function return base\n");
   }
 
   parseDataUpdate(msg) {
-    console.log("parse data return base\n");
+    //console.log("parse data return base\n");
   }
 
   parseMessage(msg) {
-    console.log("\nparse message in base class\n", msg);
+    //console.log("\nparse message in base class\n", msg);
     switch (msg['type']) {
       case 'signalCallback':
         this.parseSignalCallback(msg);
@@ -78,7 +77,7 @@ class baseComponent {
       "signal": signal
     };
     socket.emit('message', msg);
-    console.log("registerSignal", msg);
+    //console.log("registerSignal", msg);
   }
 
   //set signal value in module
@@ -90,7 +89,7 @@ class baseComponent {
       "value": value
     };
     socket.emit('message', msg);
-    console.log("setSignal", msg);
+    //console.log("setSignal", msg);
   }
 
   addModule(moduleName, listOfSignals = [], trackSignal = true) {
@@ -100,9 +99,7 @@ class baseComponent {
       "moduleName": moduleName,
       "listOfSignals": listOfSignals
     };
-    console.log(msg);
     socket.emit('message', msg);
-    console.log("addModule", msg, "moduleName: ", moduleName, "listofSignals: ", listOfSignals);
   }
 
   removeModule() {
@@ -110,13 +107,13 @@ class baseComponent {
       "type": "removeModule",
       "uid": this.uuid
     };
-    console.log(msg);
+    //console.log(msg);
     socket.emit('message', msg);
   }
 
   callModule(func, parameter = {}) {
     //{} indicate no parameter
-    console.log(func, parameter);
+    //console.log(func, parameter);
     var msg = {
       "type": "callModule",
       "uid": this.uuid,
@@ -124,7 +121,6 @@ class baseComponent {
       "parameter": parameter
     };
     socket.emit('message', msg);
-    console.log("callMod", msg);
   }
 
   updateWidthHeight() {

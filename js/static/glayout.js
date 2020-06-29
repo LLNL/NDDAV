@@ -1,8 +1,6 @@
 class glayout {
   constructor(container, panelMetaInfo, objectMap) {
-    console.log("glayout constructor");
     this.panelMetaInfo = panelMetaInfo;
-    console.log(this.panelMetaInfo)
     this.objectMap = objectMap;
 
     this.container = container;
@@ -90,7 +88,6 @@ class glayout {
   }
 
   handleInitLayout(msg) {
-    console.log(msg["data"]["data"]);
     var layoutDesc = msg["data"]["data"]
     var config = this.convertToConfig(layoutDesc);
 
