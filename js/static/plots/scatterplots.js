@@ -363,15 +363,15 @@ class scatterplots extends basePlot {
     }
 
     _cmOffset() {
-        return [this.width - 285, -30];
+        return [this.width - 345, -30];
     }
     _xsOffset() {
         return [this.width - 100, this.height + 22];
     }
     _ysOffset() {
-        return [0, -30];
+        return [-30, -35];
     }
     _vsOffset() {
-        return [this.width - 105, -30];
+        return [this.width - 65, -30];
     }
 }
