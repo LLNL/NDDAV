@@ -21,16 +21,16 @@ class baseComponent {
 
   // this function will be extended by the subclasses
   parseSignalCallback(msg) {
-    //console.log("parse signal callback base\n");
+    console.log("parse signal callback base\n");
   }
 
   // this function will be extended by the subclasses
   parseFunctionReturn(msg) {
-    //console.log("parse function return base\n");
+    console.log("parse function return base\n");
   }
 
   parseDataUpdate(msg) {
-    //console.log("parse data return base\n");
+    console.log("parse data return base\n");
   }
 
   parseMessage(msg) {
@@ -99,6 +99,7 @@ class baseComponent {
       "moduleName": moduleName,
       "listOfSignals": listOfSignals
     };
+    console.log(msg)
     socket.emit('message', msg);
   }
 

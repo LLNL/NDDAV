@@ -2,6 +2,7 @@ import json
 import ipywidgets as widgets
 from traitlets import Bool, Dict, Float, Int, List, Unicode, Union
 import socket
+from multiprocessing import Process, Pipe, Lock, Queue
 
 from .nddavPackage import *
 
@@ -33,6 +34,8 @@ def createDisplay(jsonLayout=None, port=5000, data=None):
             layout = json.load(read_file)
     else:
         layout = defaultLayout
+
+    global num_rows
     num_rows = len(layout['column'])
     print(layout)
 
@@ -44,13 +47,13 @@ def createDisplay(jsonLayout=None, port=5000, data=None):
         port = s.getsockname()[1]
     s.close()
 
-    print(data)
-
+    global vis
     vis = nddav(layout, port, data)
     vis.show()
 
     display = NDDAVDisplay()
     display._port_number = port
     display._num_rows = num_rows
-    return displays
+    return display
+
     

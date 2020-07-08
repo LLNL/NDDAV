@@ -1,8 +1,10 @@
 # python interface for accessing the NDDAV visualization
 # encapsulate the nddav server
+
+import eventlet
+#eventlet.monkey_patch(socket=True)
 from flask import Flask, Response, request, redirect, send_from_directory, url_for
 import socketio
-import eventlet
 from .hdanalysis.modules import *
 from .hdanalysis.core import *
 import threading
@@ -10,17 +12,23 @@ import sys
 import os
 
 import multiprocess as mp
+from multiprocess import Queue
 import os.path as op
 from functools import partial
 import slugid
 import requests
 import time
 
+import numpy as np
+
 #### for file upload ####
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__, static_folder='../js/static')
-sio = socketio.Server(ping_timeout=12000, ping_interval=12000, cors_allowed_origins='*')
+
+#mgr = socketio.RedisManager('redis://')
+
+sio = socketio.Server(ping_timeout=12000, ping_interval=12000, cors_allowed_origins='*')#, client_manager=mgr)
 fApp = socketio.Middleware(sio, app)
 registry = ModuleUIRegistry(sio)
 
@@ -42,12 +50,12 @@ class nddav:
         global moduleData
         hasModule = False
         moduleData = None
-        print(data)
         if data is not None:
             hasModule = True
             moduleData = data
 
     def addModule(self, moduleName):
+        print("nddav adding module")
         return registry.addPurePythonModule(moduleName)
 
     def getModule(self, moduleName):
@@ -116,10 +124,6 @@ class nddav:
     def onDisconnect(sid):
         print ('\n\n!!!!!!!!! socketIO disconnected !!!!!!!!\n\n', sid)
 
-    def start_fuse_processes(self):
-        self.fuse_process = FuseProcess(op.join(OS_TEMPDIR, 'nddav_nbextension'))
-        self.fuse_process.setup()
-
     def show(self):
         # credit for this code goes to the higlass-python team: https://github.com/higlass/higlass-python
         for puid in list(self.processes.keys()):
@@ -130,9 +134,10 @@ class nddav:
 
         target = partial(eventlet.wsgi.server, sock=eventlet.listen(('localhost', self.port)), site=fApp)
 
-        self.processes[uuid] = mp.Process(target=target)
+        self.processes[uuid] = mp.Process(target=target)#self.startServer, args=(q,))
         self.processes[uuid].start()
-        #print(self.processes[uuid].pid())
+
+        #eventlet.wsgi.server(eventlet.listen(('localhost', self.port)), fApp)
 
         self.connected = False
         while not self.connected:
@@ -143,4 +148,3 @@ class nddav:
                     self.connected = True
             except requests.ConnectionError:
                 time.sleep(0.2)
-        #eventlet.wsgi.server(eventlet.listen(('localhost', self.port)), fApp)

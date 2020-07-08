@@ -24,6 +24,17 @@ class DataContext(object):
 
         return self._modules[-1]
 
+    def addModuleObject(self, module):
+        self._modules.append(module)
+        
+        new_module = self._modules[-1]
+        for proxy in new_module._inputPorts:
+            if proxy.valid():
+                proxy.changedSignal.emit(proxy.getData())
+
+        return self._modules[-1]
+
+
     def registerSharedValue(self, name, value):
         if name not in self._sharedValues.keys():
             self._sharedValues[name] = SharedValueProxy(name, value)

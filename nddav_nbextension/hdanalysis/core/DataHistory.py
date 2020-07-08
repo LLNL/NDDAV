@@ -25,7 +25,7 @@ class DataHistory(object):
         # print "Existing keys for data history: ", historySummary.keys()
         # print "        History Summary = ", historySummary.keys()
         for proxy in args:
-            # print "                  Proxy = ", proxy.getData()
+            #print("                  Proxy = ", proxy.getData())
             if not proxy.valid():
                 print ("DataHistory: checkHistory  proxy is invalid")
                 return False

@@ -11,12 +11,12 @@ class DataProxy(object):
         self.history = DataHistory(self)
 
     def setData(self, data):
-        #print ("*************** Data Set ********************************\n")
+        #print("*************** Data Set ********************************\n")
         self._data = data
         # print "data = ", self._data, ".....\n"
 
         # print ("Finish data set \n")
-        # print "setData in DataProxy:", type(data)
+        #print("setData in DataProxy:", type(data))
         self.history.updateDataRef()
         # print "DataProxy, SetData:             "
         self.changedSignal.emit(self._data)

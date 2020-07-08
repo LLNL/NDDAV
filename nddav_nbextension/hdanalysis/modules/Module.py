@@ -86,6 +86,9 @@ class Module(object):
     def _makeOutputName(self,name):
         return self.__class__.__name__ + "(%s)" % name
 
+    def _setContext(self, context):
+        self._context = context
+
 
 '''
     def __init__(self,parent=None):

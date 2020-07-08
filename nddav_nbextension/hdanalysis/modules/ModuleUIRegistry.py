@@ -4,6 +4,8 @@ import importlib
 import json
 from threading import Timer
 import sys
+import os
+from hdff import *
 
 '''
   store the map between server module and the corresponding UI in javascript
@@ -59,7 +61,6 @@ class ModuleUIRegistry:
             #print("uid: ", uid, "function: ", function, "parameter: ", parameter)
             self.callModule(uid, function, parameter)
         elif msgType == 'addModule':
-            #print('addModule')
             moduleName = msg['moduleName']
             listOfSignals = msg['listOfSignals']
             self.addModule(uid, moduleName, listOfSignals)
@@ -81,10 +82,15 @@ class ModuleUIRegistry:
                 #print("########## trigger after initilization callback")
                 self.afterInitilizationCallback();
 
+    # creates and adds a module given a module type
     def addPurePythonModule(self, module_type):
         # the reference is return for python script to access
-        #print(module_type)
         return self.context.addModule(module_type)
+
+    # adds a pre-created module object
+    def addPurePythonModuleObject(self, module):
+        module._setContext(self.context)
+        return self.context.addModuleObject(module)
 
     def addModule(self, uid, moduleName, listOfSignals):
         #print ('        addModule => ', moduleName, uid, listOfSignals)
@@ -98,7 +104,6 @@ class ModuleUIRegistry:
         module = getattr(
                  m1,
                  moduleName)
-        #print(module)
         #### do not track signal on this module #####
         if uid == -1:
             self.context.addModule(module)
@@ -113,23 +118,49 @@ class ModuleUIRegistry:
 
             for signal in listOfSignals:
                 self.registerSignal(uid, signal)
+            self.numModules = self.numModules - 1
             #check all the module
 
-        if (self.numModules == len(list(self.uid2Module.values()))) and self.hasModule:
-            ext = splitext(self.moduleData)[1]
-            if ext == ".hdff":
-                m1 = importlib.import_module(".HDFileModule", "nddav_nbextension.hdanalysis.modules")
-                mt = getattr(m1, "HDFileModule")
-            else:
+        # adds 
+        if self.numModules == 0 and self.hasModule:
+            if type(self.moduleData) == str:
+                ext = splitext(self.moduleData)[1]
+                if ext == ".hdff":
+                    m1 = importlib.import_module(".HDFileModule", "nddav_nbextension.hdanalysis.modules")
+                    mt = getattr(m1, "HDFileModule")
+                else:
+                    m1 = importlib.import_module(".DataModule", "nddav_nbextension.hdanalysis.modules")
+                    mt = getattr(m1, "DataModule")
+                
+                m = self.addPurePythonModule(mt)
+
+                if ext == ".hdff":
+                    m.load(filename=self.moduleData, isIncludeFunctionIndexInfo=False, cube_dim=2)
+                else:
+                    m.loadFile(filename=self.moduleData)
+            elif type(self.moduleData) is np.ndarray:
                 m1 = importlib.import_module(".DataModule", "nddav_nbextension.hdanalysis.modules")
                 mt = getattr(m1, "DataModule")
-            
-            m = self.addPurePythonModule(mt)
-
-            if ext == ".hdff":
-                m.load(filename=self.moduleData, isIncludeFunctionIndexInfo=False, cube_dim=2)
+                m = self.addPurePythonModule(mt)
+                m.loadData2(data=self.moduleData)
+            elif type(self.moduleData) is type(DataBlockHandle()):
+                m1 = importlib.import_module(".HDFileModule", "nddav_nbextension.hdanalysis.modules")
+                mt = getattr(m1, "HDFileModule")
+                m = self.addPurePythonModule(mt)
+                m.insertData(handle=self.moduleData)
             else:
-                m.loadFile(filename=self.moduleData)
+                m1 = importlib.import_module(".HDFileModule", "nddav_nbextension.hdanalysis.modules")
+                m1 = getattr(m1, "HDFileModule")
+
+                m2 = importlib.import_module(".DataModule", "nddav_nbextension.hdanalysis.modules")
+                m2 = getattr(m2, "DataModule")
+
+                if type(self.moduleData) is m1:
+                    m = self.addPurePythonModuleObject(self.moduleData)
+                    m.updateOutputPorts()
+                    m.load(m.filename)
+
+
             
 
     ############## direct data communication without modules ###########
@@ -140,7 +171,10 @@ class ModuleUIRegistry:
             self.moduleData = moduleData
 
         self.data[name] = data
-        self.numModules = len(data['column'][0]['row'])
+        self.numModules = 0
+        for row in range(0,len(data['column'])):
+            self.numModules = self.numModules + len(data['column'][row]['row'])
+
         #propagate data update
         if name in self.data2ID.keys():
             for id in self.data2ID[name]:

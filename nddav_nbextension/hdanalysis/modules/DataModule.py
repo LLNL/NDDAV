@@ -47,7 +47,8 @@ class DataModule(Module):
         print ("============= DataModule.computeFunction:\n ", data.__class__)
         self._domain = list(data.dtype.names[0:-1])
         self._range = data.dtype.names[-1]
-        # print (self._domain, self._range)
+        print (self._domain, self._range)
+        print(self._norm)
         return data.function(self._domain+[self._range],norm=self._norm)
 
         # If we haven't specified a domain
@@ -135,6 +136,10 @@ class DataModule(Module):
         self.data.setData(data)
         # self.data._setData(data, 0)
         # self.setFunction(list(data.dtype.names[0:-1]), data.dtype.names[-1])
+
+    def loadData2(self, data):
+        data = loadData2(data)
+        self.data.setData(data)
 
 
     ###### why any setFunction is necessary

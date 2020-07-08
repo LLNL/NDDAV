@@ -29,7 +29,7 @@ class TopospineModule(Module):
         # self.brushedrange.changedSignal.connect(self.brushtest)
 
     def initTopoSpine(self, EGgraph):
-        #print ("######### TopospineModule::initTopoSpine ########")
+        print ("######### TopospineModule::initTopoSpine ########")
         self._extremum_graph = EGgraph
 
         #### FIXME remove the need for Function #####

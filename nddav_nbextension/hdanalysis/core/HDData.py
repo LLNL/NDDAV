@@ -130,7 +130,6 @@ def loadCSV(filename):
     return data
 
 def loadASCII(filename):
-
     input = open(filename,'r')
     dim = len(input.readline().split())
     input.close()
@@ -187,5 +186,17 @@ def loadFile(filename):
     else:
         warn("Filetype of \"%s\" not recognized" % filename)
         return None
+
+    return data
+
+def loadData2(data):
+    _ , dim = data.shape
+
+    names = ['X%d' % i for i in range(0,dim)]
+    types = ['f4']*dim
+
+    test = np.array(zip(names, types))
+    data = data.view(dtype=list(zip(names,types))).view(HDData)
+    data.name = "nparray_Data"
 
     return data
