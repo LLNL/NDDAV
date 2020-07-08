@@ -1,4 +1,12 @@
-from ...hdanalysis.core import *
+def is_running_from_ipython():
+    from IPython import get_ipython
+    return get_ipython() is not None
+notebook = is_running_from_ipython()
+
+if notebook:
+    from ...hdanalysis.core import *
+else:
+    from hdanalysis.core import *
 
 # the manager for python javascript communication
 from .ModuleUIRegistry import *

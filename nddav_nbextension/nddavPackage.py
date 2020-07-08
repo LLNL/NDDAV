@@ -1,16 +1,18 @@
 # python interface for accessing the NDDAV visualization
 # encapsulate the nddav server
 
+# from https://stackoverflow.com/questions/15411967/how-can-i-check-if-code-is-executed-in-the-ipython-notebook/24937408#24937408
+def is_running_from_ipython():
+    from IPython import get_ipython
+    return get_ipython() is not None
+notebook = is_running_from_ipython()
+
 import eventlet
-#eventlet.monkey_patch(socket=True)
 from flask import Flask, Response, request, redirect, send_from_directory, url_for
 import socketio
-from .hdanalysis.modules import *
-from .hdanalysis.core import *
 import threading
 import sys
 import os
-
 import multiprocess as mp
 from multiprocess import Queue
 import os.path as op
@@ -18,8 +20,16 @@ from functools import partial
 import slugid
 import requests
 import time
-
 import numpy as np
+
+if notebook:
+    print("jupyter")
+    from .hdanalysis.modules import *
+    from .hdanalysis.core import *
+else:
+    print("console")
+    from hdanalysis.modules import *
+    from hdanalysis.core import *
 
 #### for file upload ####
 from werkzeug.utils import secure_filename

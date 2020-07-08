@@ -6,6 +6,10 @@ from threading import Timer
 import sys
 import os
 from hdff import *
+def is_running_from_ipython():
+    from IPython import get_ipython
+    return get_ipython() is not None
+notebook = is_running_from_ipython()
 
 '''
   store the map between server module and the corresponding UI in javascript
@@ -98,11 +102,16 @@ class ModuleUIRegistry:
             print ('       module already exist, reconnect')
             return
 
-        # changed from original NDDAV repo
-        m1 = importlib.import_module("."+moduleName, "nddav_nbextension.hdanalysis.modules")
+        if notebook:
+            # changed from original NDDAV repo
+            m1 = importlib.import_module("."+moduleName, "nddav_nbextension.hdanalysis.modules")
 
-        module = getattr(
-                 m1,
+            module = getattr(
+                     m1,
+                     moduleName)
+        else:
+            module = getattr(
+                 importlib.import_module("hdanalysis.modules."+moduleName),
                  moduleName)
         #### do not track signal on this module #####
         if uid == -1:
