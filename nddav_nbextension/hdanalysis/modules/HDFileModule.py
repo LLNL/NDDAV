@@ -1,5 +1,6 @@
 from .Module import *
 from hdff import *
+from os import path
 
 class HDFileModule(Module):
     def __init__(self, parent=None, file=None):
@@ -15,7 +16,10 @@ class HDFileModule(Module):
         filename = str(filename)
         print("##### Load file:", filename, "  ######")
         collection = DataCollectionHandle()
-        collection.attach("data/"+filename)
+        if path.exists("data/"+filename):
+            collection.attach("data/"+filename)
+        else:
+            collection.attach(filename)
         dataset = collection.dataset(0)
         # load EG
         handle = dataset.getDataBlock(0)
