@@ -1,0 +1,14 @@
+numpy>=1.16
+flask
+graphviz
+pyclipper
+flask_socketio
+scipy
+sklearn
+python-socketio
+eventlet
+
+### for axis-align decompsition ####
+#cvxpy
+#pymanopt
+#nudged
