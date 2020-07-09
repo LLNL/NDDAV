@@ -10,7 +10,7 @@ import re
 import struct
 from .HDWarning import *
 from .HDDataObject import *
-from os.path import split,splitext
+from os.path import split,splitext, exists
 
 class HDData(np.recarray,HDDataObject):
     """HDData is a wrapper around a numpy array of records or a view thereof
@@ -175,6 +175,8 @@ def loadRecarray(filename):
 
 def loadFile(filename):
     ###### assuming the file is already upload to the server ######
+    if exists("data/"+filename):
+        filename = "data/"+filename
     if splitext(filename)[1] == ".csv":
         data = loadCSV(filename)
     elif splitext(filename)[1] == ".pts":

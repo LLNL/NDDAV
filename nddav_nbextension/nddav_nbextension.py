@@ -3,6 +3,7 @@ import ipywidgets as widgets
 from traitlets import Bool, Dict, Float, Int, List, Unicode, Union
 import socket
 from multiprocessing import Process, Pipe, Lock, Queue
+from os.path import exists
 
 from .nddavPackage import *
 
@@ -28,6 +29,9 @@ def createDisplay(jsonLayout=None, port=5000, data=None):
             {"row": ["Table"]}
         ]
     }
+
+    if exists('config/'+jsonLayout):
+        jsonLayout = 'config/'+jsonLayout
 
     if jsonLayout:
         with open(jsonLayout, "r") as read_file:
