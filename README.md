@@ -9,13 +9,14 @@ To install:
 2. Install hdtopology: https://github.com/LLNL/hdtopology
 3. Install required python packages:
 
-`   pip install -r requirements.txt`
+    $ pip install -r requirements.txt
 
 To use as a notebook extension:
 
     $ ./launch_app.sh
 
 To run as a web page:
-`   python3 nddavServer.py --port=####--layout=/path/to/json`
+
+    $ python3 nddavServer.py --port=####--layout=/path/to/json
 
 
