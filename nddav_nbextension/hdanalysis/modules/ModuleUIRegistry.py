@@ -158,7 +158,6 @@ class ModuleUIRegistry:
                 if type(self.moduleData) is m1:
                     m = self.addPurePythonModuleObject(self.moduleData)
                     m.updateOutputPorts()
-                    m.load(m.filename)
 
 
             

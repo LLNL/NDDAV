@@ -18,6 +18,6 @@ To use as a notebook extension:
 
 To run as a web page:
 
-    python3 nddavServer.py --port=####--layout=/path/to/json
+    python3 nddavServer.py --port=#### --layout=/path/to/json
 
 
