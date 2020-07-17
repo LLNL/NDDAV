@@ -175,8 +175,6 @@ def loadRecarray(filename):
 
 def loadFile(filename):
     ###### assuming the file is already upload to the server ######
-    if exists("data/"+filename):
-        filename = "data/"+filename
     if splitext(filename)[1] == ".csv":
         data = loadCSV(filename)
     elif splitext(filename)[1] == ".pts":

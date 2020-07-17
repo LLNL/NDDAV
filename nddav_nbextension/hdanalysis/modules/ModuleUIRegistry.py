@@ -6,6 +6,7 @@ from threading import Timer
 import sys
 import os
 from hdff import *
+from pathlib import Path
 
 '''
   store the map between server module and the corresponding UI in javascript
@@ -125,6 +126,10 @@ class ModuleUIRegistry:
         if self.numModules == 0 and self.hasModule:
             if type(self.moduleData) == str:
                 ext = splitext(self.moduleData)[1]
+
+                data_path = os.path.join(Path(__file__).parent.parent.parent.parent, 'data/')
+                if exists(data_path + self.moduleData):
+                    self.moduleData = data_path + self.moduleData
                 if ext == ".hdff":
                     m1 = importlib.import_module(".HDFileModule", "nddav_nbextension.hdanalysis.modules")
                     mt = getattr(m1, "HDFileModule")

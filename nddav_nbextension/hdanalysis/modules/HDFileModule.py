@@ -15,10 +15,7 @@ class HDFileModule(Module):
         filename = str(filename)
         print("##### Load file:", filename, "  ######")
         collection = DataCollectionHandle()
-        if path.exists("data/"+filename):
-            collection.attach("data/"+filename)
-        else:
-            collection.attach(filename)
+        collection.attach(filename)
         dataset = collection.dataset(0)
         # load EG
         handle = dataset.getDataBlock(0)
