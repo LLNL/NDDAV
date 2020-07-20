@@ -1,9 +1,10 @@
 import json
 import ipywidgets as widgets
-from traitlets import Bool, Dict, Float, Int, List, Unicode, Union
+from traitlets import Int, Unicode
 import socket
-from multiprocessing import Process, Pipe, Lock, Queue
 from os.path import exists
+from os import kill
+import signal
 
 from .nddavPackage import *
 
@@ -20,36 +21,36 @@ class NDDAVDisplay(widgets.DOMWidget):
     _port_number = Int().tag(sync=True)
     _num_rows = Int().tag(sync=True)
 
-def createDisplay(jsonLayout=None, port=5000, data=None):
-    defaultLayout = {
+def createDisplay(layout="sample", port=5000, data=None):
+    sampleLayout = {
         "column": [
             {"row": ["Neighborhood", "Topological Spine"]},
-            {"row": ["Parallel Coordinate", "Scatter Plot"]},
-            {"row": ["Clustering", "DimReduction"]},
-            {"row": ["Table"]}
+            {"row": ["Parallel Coordinate", "Scatter Plot"]}
         ]
     }
+    summaryLayout = {
+      "column": [{
+        "row": ["Summary P.C."]
+      }, {
+        "row": ["Topological Spine", "Summary Scatter"]
+      }]
+    }
 
-    if exists('config/'+jsonLayout):
+    '''if exists('config/'+jsonLayout):
         jsonLayout = 'config/'+jsonLayout
 
     if jsonLayout:
         with open(jsonLayout, "r") as read_file:
             layout = json.load(read_file)
     else:
-        layout = defaultLayout
+        layout = defaultLayout'''
+    if layout == "summary":
+        layout = summaryLayout
+    else:
+        layout = sampleLayout
 
     global num_rows
     num_rows = len(layout['column'])
-    print(layout)
-
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    try:
-        s.bind(('', port))
-    except:
-        s.bind(('',0))
-        port = s.getsockname()[1]
-    s.close()
 
     global vis
     vis = nddav(layout, port, data)
@@ -59,5 +60,15 @@ def createDisplay(jsonLayout=None, port=5000, data=None):
     display._port_number = port
     display._num_rows = num_rows
     return display
+
+def findPort():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    '''try:
+        s.bind(('', port))
+    except:'''
+    s.bind(('',0))
+    port = s.getsockname()[1]
+    s.close()
+    return port
 
     

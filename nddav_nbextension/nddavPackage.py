@@ -15,6 +15,7 @@ import slugid
 import requests
 import time
 import numpy as np
+import gc
 
 from .hdanalysis.modules import *
 from .hdanalysis.core import *
@@ -124,18 +125,19 @@ class nddav:
 
     def show(self):
         # credit for this code goes to the higlass-python team: https://github.com/higlass/higlass-python
-        for puid in list(self.processes.keys()):
-            self.processes[puid].terminate()
-            del self.processes[puid]
-
+        for p in list(self.processes.keys()):
+            if self.port == p:
+                print("delete ", self.processes[p])
+                self.processes[p].kill()
+                del self.processes[p]
+                time.sleep(0.5)
+        #print(self.processes)
         uuid = slugid.nice()
 
         target = partial(eventlet.wsgi.server, sock=eventlet.listen(('localhost', self.port)), site=fApp)
 
-        self.processes[uuid] = mp.Process(target=target)#self.startServer, args=(q,))
-        self.processes[uuid].start()
-
-        #eventlet.wsgi.server(eventlet.listen(('localhost', self.port)), fApp)
+        self.processes[self.port] = mp.Process(target=target)#self.startServer, args=(q,))
+        self.processes[self.port].start()
 
         self.connected = False
         while not self.connected:
