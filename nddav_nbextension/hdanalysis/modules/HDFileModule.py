@@ -14,6 +14,8 @@ class HDFileModule(Module):
         ## convert from unicode to ascii
         filename = str(filename)
         print("##### Load file:", filename, "  ######")
+        if path.exists('data/'+filename):
+            filename = 'data/'+filename
         collection = DataCollectionHandle()
         collection.attach(filename)
         dataset = collection.dataset(0)
