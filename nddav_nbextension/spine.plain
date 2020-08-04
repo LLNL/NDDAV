@@ -1,0 +1,7 @@
+graph 1 2.528 0.69832
+node 458 0.375 0.34144 0.75 0.5 458 solid ellipse black lightgrey
+node 838 2.153 0.44832 0.75 0.5 838 solid ellipse black lightgrey
+node 148 1.1686 0.25 0.75 0.5 148 solid ellipse black lightgrey
+edge 148 458 4 0.79505 0.29304 0.77897 0.29489 0.76284 0.29675 0.74676 0.2986 solid black
+edge 148 838 4 1.5296 0.32272 1.6152 0.33996 1.7065 0.35836 1.7921 0.3756 solid black
+stop

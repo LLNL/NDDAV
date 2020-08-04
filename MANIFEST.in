@@ -1,0 +1,2 @@
+recursive-include nddav_nbextension/static *.*
+include nddav_nbextension.json

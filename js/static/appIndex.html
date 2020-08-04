@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://golden-layout.com/files/latest/css/goldenlayout-base.css" /> -->
+  <link type="text/css" rel="stylesheet" href="../../static/css/bootstrap.min.css">
+  <link type="text/css" rel="stylesheet" href="../../static/css/goldenlayout-base.css" />
+  <link type="text/css" rel="stylesheet" href="../../static/css/goldenlayout-light-theme.css" />
+  <link type="text/css" rel="stylesheet" href="../../static/css/d3.parcoords.css">
+  <link type="text/css" rel="stylesheet" href="../../static/css/app.css">
+  <link type="text/css" rel="stylesheet" href="../../static/css/slider.css">
+  <link type="text/css" rel="stylesheet" href="../../static/css/scatter.css">
+
+  <!-- <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+  <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+  <!-- <script type="text/javascript" src="https://golden-layout.com/files/latest/js/goldenlayout.min.js"></script> -->
+  <!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script> -->
+  <script type="text/javascript" src="../../static/lib/d3.v3.min.js" charset="utf-8"></script>
+  <!-- <script type="text/javascript" src="../../static/lib/d3-color.v1.min.js" charset="utf-8"></script> -->
+  <script type="text/javascript" src="../../static/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="../../static/lib/tether.min.js"></script>
+  <script type="text/javascript" src="../../static/lib/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../../static/lib/goldenlayout.min.js"></script>
+  <script type="text/javascript" src="../../static/lib/socket.io.min.js"></script>
+  <script type="text/javascript" src="../../static/lib/chroma.min.js"></script>
+  <script type="text/javascript" src="../../static/lib/utilityFunctions.js"></script>
+  <script type="text/javascript" src="../../static/lib/mustache.min.js"></script>
+  <script type="text/javascript" src="../../static/lib/clipper.js"></script>
+  <!-- <script type="text/javascript" src="http://wzrd.in/standalone/uuid%2Fv1@latest"></script> -->
+  <script type="text/javascript" src="../../static/lib/uuidv1.js"></script>
+  <script type="text/javascript" src="../../static/lib/d3.centerScale.js"></script>
+  <script type="text/javascript" src="../../static/lib/d3-ForceEdgeBundling.js"></script>
+  <script type="text/javascript" src="../../static/lib/fabric.min.js"></script>
+  <script type="text/javascript" src="../../static/lib/vectorious.min.js"></script>
+
+  <script type="text/javascript" src="../../static/lib/d3UIitemSelector.js"></script>
+  <script type="text/javascript" src="../../static/lib/d3UIslider.js"></script>
+  <script type="text/javascript" src="../../static/lib/d3UIcolorMap.js"></script>
+  <script type="text/javascript" src="../../static/lib/d3UIglyph.js"></script>
+  <script type="text/javascript" src="../../static/lib/d3.parcoords.js"></script>
+  <script type="text/javascript" src="../../static/lib/d3CheckBox.js"></script>
+  <script type="text/javascript" src="../../static/lib/parallel.js"></script>
+
+  <script type="text/javascript" src="../../static/plots/basePlot.js"></script>
+  <script type="text/javascript" src="../../static/plots/scatterplots.js"></script>
+
+  <script type="text/javascript" src="../../static/plots/summaryscatterplots.js"></script>
+
+  <script type="text/javascript" src="../../static/plots/parallelcoordinatesPlot.js"></script>
+
+  <script type="text/javascript" src="../../static/plots/summaryparallelcoordinatesPlot.js"></script>
+
+  <script type="text/javascript" src="../../static/plots/heatmapPlot.js"></script>
+  <script type="text/javascript" src="../../static/plots/persistencePlot.js"></script>
+  <script type="text/javascript" src="../../static/plots/topospinesPlot.js"></script>
+  <script type="text/javascript" src="../../static/plots/optimalAxisAlignPlot.js"></script>
+  <script type="text/javascript" src="../../static/plots/dynamicProjPlot.js"></script>
+  <script type="text/javascript" src="../../static/plots/slabPlot.js"></script>
+  <script type="text/javascript" src="../../static/plots/peelingPlot.js"></script>
+
+  <script type="text/javascript" src="../../static/components/baseComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/filterComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/hdfileComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/neighborhoodComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/dimensionReductionComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/clusteringComponent.js"></script>
+
+  <script type="text/javascript" src="../../static/components/tableComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/scatterplotsComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/parallelcoordinatesComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/topospineComponent.js"></script>
+
+
+  <script type="text/javascript" src="../../static/components/summaryparallelcoordinatesComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/summaryscatterplotsComponent.js"></script>
+
+  <script type="text/javascript" src="../../static/components/multiTopospineComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/funcDistComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/optimalAxisAlignComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/dynamicProjComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/peakShapeComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/scatterplotPeelingComponent.js"></script>
+
+  <script type="text/javascript" src="../../static/components/imageComponent.js"></script>
+  <script type="text/javascript" src="../../static/components/viewGraphComponenet.js"></script>
+
+  <script type="text/javascript" src="../../static/glayout.js"></script>
+
+<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+
+  <!-- <script type="text/javascript" src="../../static/lib/vue.js"></script> -->
+  <!-- <script src="https://unpkg.com/vue"></script> -->
+</head>
+
+
+<body>
+  <div id="wrapper">
+    <!-- <div id="menu"> -->
+        <!--ul id="menuContainer"></ul-->
+    <!-- </div> -->
+
+    <div id="layoutContainer"></div>
+  </div>
+</body>
+
+<script type="text/javascript" src="../../static/main.js"></script>
+
+</html>

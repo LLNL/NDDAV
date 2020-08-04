@@ -1,0 +1,5 @@
+{
+  "load_extensions": {
+    "nddav_nbextension/extension": true
+  }
+}

@@ -1,0 +1,25 @@
+<form style="margin:auto" action="/">
+    <!-- <legend>Neighborhood Graph</legend> -->
+    <div class="input-group">
+        <span class="input-group-addon">Graph Type</span>
+        <select class="form-control" id='{{id}}neighbor_type'>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon">Max # Neighbors</span>
+        <input  value="20" id="{{id}}max_neighbor" class="form-control"/>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon" >Beta value</span>
+        <input type="text"  class="form-control" id='{{id}}beta'>
+    </div>
+
+    <div>
+         <button type="button" id="{{id}}BT_update" class="btn btn-primary" style="width:100%;">Update</button>
+    </div>
+    <!-- <div>
+         <button type="button" id="{{id}}BT_VTPdump" class="btn btn-primary" style="width:100%;" >Dump VTP</button>
+    </div> -->
+</form>
