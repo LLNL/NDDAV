@@ -1,12 +1,14 @@
 numpy>=1.16
-flask
-graphviz
-pyclipper
-flask_socketio
-scipy
+flask==1.1.2
+graphviz==0.15
+pyclipper==1.2.0
+#Flask-SocketIO==4.0.0
+scipy==1.5.4
 sklearn
-python-socketio
-eventlet
+python-engineio==4.0.0
+python-socketio==5.0.3
+eventlet==0.30.0
+requests==2.25.0
 
 ### for axis-align decompsition ####
 #cvxpy
